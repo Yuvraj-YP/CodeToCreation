@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code to Creation — Mentorship Bootcamp</title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <style>
+        /* --- Apple-Style Design System Core --- */
+        :root {
+            --bg-base: #000000;
+            --bg-surface: #0a0a0c;
+            --bg-card: rgba(22, 22, 26, 0.7);
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent-blue: #2997ff;
+            --accent-purple: #bf5af2;
+            --border-glow: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* --- Global Scrollbars & Progress Indicators --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c2c2e;
+            border-radius: 4px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            width: 0%;
+            z-index: 2000;
+            transition: width 0.1s ease;
+        }
+
+        /* --- Ambient Lighting (Floating Gradient Orbs) --- */
+        .orb-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.25;
+            animation: floatOrb 12s infinite alternate ease-in-out;
+        }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-blue);
+            top: -100px;
+            right: -50px;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-purple);
+            top: 40%;
+            left: -150px;
+            animation-delay: -4s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(40px) scale(1.1); }
+        }
+
+        /* --- Glassmorphism App Navigation Bar --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-glow);
+            z-index: 1000;
+            padding: 14px 0;
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+        }
+        .brand-logo {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        .cta-nav-btn {
+            background-color: var(--text-primary);
+            color: var(--bg-base);
+            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 20px;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cta-nav-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* --- Animated Hero Presentation Layer --- */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 120px 24px 40px 24px;
+        }
+        .hero-content {
+            max-width: 760px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeIn 1s 0.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .hero-content h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
+        }
+        .scroll-down-btn {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: opacity 0.2s ease;
+        }
+        .scroll-down-btn:hover {
+            opacity: 0.8;
+        }
+
+        @keyframes heroFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Syllabus Interactive Timeline Framework --- */
+        .syllabus-section {
+            max-width: 840px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            padding: 80px 24px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 56px;
+        }
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Scroll Reveal Base Engine */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover-Expand Syllabus Cards & Depth FX */
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 18px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 24px;
+            align-items: start;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .timeline-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-number {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            background: rgba(41, 151, 255, 0.1);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        .timeline-card:nth-child(even) .card-number {
+            color: var(--accent-purple);
+            background: rgba(191, 90, 242, 0.1);
+        }
+
+        .card-text h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .card-text p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        /* Comprehensive syllabus list hidden by default, smoothly shifts on hover */
+        .syllabus-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding-top: 0;
+        }
+        .timeline-card:hover .syllabus-dropdown {
+            max-height: 200px;
+            opacity: 1;
+            padding-top: 16px;
+        }
+        .syllabus-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 16px;
+        }
+        .syllabus-list li {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .syllabus-list li::before {
+            content: "•";
+            color: var(--text-secondary);
+        }
+
+        /* --- Premium Call to Action Banner --- */
+        .final-cta-container {
+            margin-top: 96px;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 64px 32px;
+            text-align: center;
+            position: relative;
+        }
+        .final-cta-container h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+        .final-cta-container p {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-main-btn {
+            display: inline-block;
+            background-color: var(--text-primary);
+            color: var(--bg-base);
+            text-decoration: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 24px;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cta-main-btn:hover {
+            transform: scale(1.02);
+            opacity: 0.95;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        /* --- Utilities (Back to top) --- */
+        #btn-back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            background: rgba(22, 22, 26, 0.8);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-glow);
+            border-radius: 50%;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        #btn-back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Optimization adjustments */
+        @media (max-width: 640px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .timeline-card { grid-template-columns: 1fr; gap: 16px; text-align: center; justify-items: center; }
+            .final-cta-container h2 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <div class="orb-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="brand-logo">Code to Creation</span>
+            
+            <a href="https://your-flet-app-link.onrender.com/bootcamp_reg" class="cta-nav-btn">Register</a>
+            </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Engineered From Scratch.</h1>
+            <p>A precision terminal-to-hardware mentorship framework limited to 15 Students. Master functional structural C++ systems, advanced script automation, and localized device biometrics.</p>
+            <a href="#syllabus" class="scroll-down-btn">Curriculum Blueprint ↓</a>
+        </div>
+    </header>
+
+    <main id="syllabus" class="syllabus-section">
+        <h2 class="section-title">Program Modules</h2>
+        <div class="timeline-container">
+            
+            <div class="timeline-card reveal">
+                <div class="card-number">01</div>
+                <div class="card-text">
+                    <h3>Foundational C++ & Objects</h3>
+                    <p>Build real programmatic logic pipelines. Shift from foundational semantics straight into software runtime architecture design execution principles.</p>
+                    <div class="syllabus-dropdown">
+                        <ul class="syllabus-list">
+                            <li>Data Types, Memory Layouts & Variable Declarations</li>
+                            <li>Conditional Logic Gates & Execution Loop Triggers</li>
+                            <li>Multi-Dimensional Grid Arrays & String Manipulation</li>
+                            <li>OOPs: Classes, Instance Objects & Constructors</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card reveal">
+                <div class="card-number">02</div>
+                <div class="card-text">
+                    <h3>High-Leverage Python Recipes</h3>
+                    <p>Skip the introductory basics entirely. Harness high-leverage scripting workflows built for real-world automation execution frames.</p>
+                    <div class="syllabus-dropdown">
+                        <ul class="syllabus-list">
+                            <li>Automated WhatsApp Scheduling via PyWhatKit</li>
+                            <li>Programmatic TLS Secured Email Servers using SMTP</li>
+                            <li>Intelligent Directory File Parsers mapped by Extension</li>
+                            <li>Local ChatGPT Interface Apps written in Flet</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card reveal">
+                <div class="card-number">03</div>
+                <div class="card-text">
+                    <h3>Kinetic IoT Architectures</h3>
+                    <p>Bridge pure terminal environments with physical microcontrollers. Deploy a working vehicle over localized wireless networks.</p>
+                    <div class="syllabus-dropdown">
+                        <ul class="syllabus-list">
+                            <li>ESP8266 Microchip Configuration & GPIO Routing</li>
+                            <li>H-Bridge Dual Motor Driver Hardware Integration</li>
+                            <li>Wireless Access Point Network Generation</li>
+                            <li>Ecosystem Integration via ESP8266 WiFi Car App Controls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-card reveal">
+                <div class="card-number">04</div>
+                <div class="card-text">
+                    <h3>Computer Vision Capstone</h3>
+                    <p>Construct intelligent software authentication locks using native hardware frames without external microcontrollers.</p>
+                    <div class="syllabus-dropdown">
+                        <ul class="syllabus-list">
+                            <li>Laptop Built-in Webcam Video Frame Captures</li>
+                            <li>Facial Characteristics Evaluation via DeepFace Engines</li>
+                            <li>Identity Matching Verification Logic Frameworks</li>
+                            <li>Software Access Event Controls & System Triggers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="final-cta-container reveal">
+            <h2>Secure Your Allocation.</h2>
+            <p>Claim your early-bird tier slot and initialize payment verification loops immediately.</p>
+            
+            <a href="https://your-flet-app-link.onrender.com/bootcamp_reg" class="cta-main-btn">Apply for Mentorship</a>
+            </div>
+    </main>
+
+    <div id="btn-back-to-top">↑</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const progressBar = document.getElementById("progress-bar");
+            const backToTopBtn = document.getElementById("btn-back-to-top");
+
+            // --- Scroll Handling Logic (Progress Bar & Back to Top visibility) ---
+            window.addEventListener("scroll", () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+
+                if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                    backToTopBtn.classList.add("visible");
+                } else {
+                    backToTopBtn.classList.remove("visible");
+                }
+            });
+
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // --- Scroll Reveal Animation Observer ---
+            const revealOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -20px 0px"
+            };
+
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const scrollObserver = new IntersectionObserver(revealCallback, revealOptions);
+            document.querySelectorAll(".reveal").forEach(element => {
+                scrollObserver.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
