@@ -6,35 +6,55 @@
     <title>Code to Creation — Mentorship Bootcamp</title>
     <meta name="referrer" content="no-referrer-when-downgrade">
     <style>
-        /* --- Apple-Style Design System Core --- */
+        /* --- Design System & Variables --- */
         :root {
             --bg-base: #000000;
             --bg-surface: #0a0a0c;
-            --bg-card: rgba(22, 22, 26, 0.7);
+            --bg-card: rgba(22, 22, 26, 0.65);
+            --bg-card-hover: rgba(32, 32, 38, 0.8);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent-blue: #2997ff;
             --accent-purple: #bf5af2;
+            --accent-purple-glow: rgba(191, 90, 242, 0.15);
+            --accent-blue-glow: rgba(41, 151, 255, 0.15);
             --border-glow: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
             --glass-blur: blur(20px);
+            --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
         }
 
+        /* --- Reset & Base Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: var(--font-system);
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
             background-color: var(--bg-base);
             color: var(--text-primary);
             overflow-x: hidden;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
         }
 
-        /* --- Global Scrollbars & Progress Indicators --- */
+        /* --- Typography Engine --- */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        /* --- Scrollbar & Utilities --- */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -53,48 +73,110 @@
             height: 3px;
             background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
             width: 0%;
-            z-index: 2000;
-            transition: width 0.1s ease;
+            z-index: 2100;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* --- Ambient Lighting (Floating Gradient Orbs) --- */
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            text-align: center;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+        }
+
+        /* --- Canvas Background FX --- */
         .orb-container {
             position: absolute;
             width: 100%;
             height: 100%;
+            top: 0;
+            left: 0;
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
         }
+
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(140px);
-            opacity: 0.25;
-            animation: floatOrb 12s infinite alternate ease-in-out;
+            opacity: 0.12;
+            mix-blend-mode: screen;
         }
+
         .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--accent-blue);
-            top: -100px;
-            right: -50px;
-        }
-        .orb-2 {
             width: 500px;
             height: 500px;
+            background: var(--accent-blue);
+            top: -150px;
+            right: -100px;
+            animation: floatOrb1 25s infinite alternate ease-in-out;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
             background: var(--accent-purple);
-            top: 40%;
-            left: -150px;
-            animation-delay: -4s;
+            top: 30%;
+            left: -200px;
+            animation: floatOrb2 30s infinite alternate ease-in-out;
         }
 
-        @keyframes floatOrb {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(40px) scale(1.1); }
+        @keyframes floatOrb1 {
+            0% { transform: translateY(0px) scale(1) rotate(0deg); }
+            100% { transform: translateY(60px) scale(1.05) rotate(30deg); }
         }
 
-        /* --- Glassmorphism App Navigation Bar --- */
+        @keyframes floatOrb2 {
+            0% { transform: translateY(0px) scale(1.05) rotate(0deg); }
+            100% { transform: translateY(-70px) scale(0.95) rotate(-30deg); }
+        }
+
+        /* --- Calm, Slow & Eye-Pleasing Transitions --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glow-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            transition: border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* --- Navigation Bar --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -104,256 +186,592 @@
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--border-glow);
-            z-index: 1000;
-            padding: 14px 0;
+            z-index: 2000;
+            padding: 16px 0;
+            transition: background-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 24px;
         }
+
         .brand-logo {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
             color: var(--text-primary);
         }
-        .cta-nav-btn {
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+        }
+
+        .btn-primary {
             background-color: var(--text-primary);
             color: var(--bg-base);
-            text-decoration: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             font-size: 0.85rem;
-            font-weight: 500;
-            border-radius: 20px;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .cta-nav-btn:hover {
+
+        .btn-primary:hover {
             opacity: 0.9;
             transform: scale(1.02);
         }
 
-        /* --- Animated Hero Presentation Layer --- */
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid var(--border-glow);
+            padding: 12px 24px;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--border-hover);
+        }
+
+        .btn-large {
+            padding: 14px 32px;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            padding: 4px;
+            z-index: 2001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: var(--text-primary);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* --- Hero Section --- */
         .hero-section {
-            min-height: 90vh;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
+            padding-top: 120px;
+            padding-bottom: 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            max-width: 680px;
+            margin: 0 auto 40px auto;
+            line-height: 1.4;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge-glass {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- Stats Section --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .stat-card {
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- Why Join Section --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 40px;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-hover);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        /* --- Program Modules Section --- */
+        .modules-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .module-card {
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .module-header {
+            padding: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .module-title-block {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .module-icon {
+            font-size: 1.8rem;
+        }
+
+        .module-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .module-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .difficulty-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .diff-beginner { background: rgba(52, 199, 89, 0.15); color: #34c759; }
+        .diff-intermediate { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; }
+        .diff-advanced { background: rgba(255, 69, 58, 0.15); color: #ff453a; }
+
+        .arrow-icon {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .module-card.expanded .arrow-icon {
+            transform: rotate(180deg);
+            stroke: var(--text-primary);
+        }
+
+        .module-card.expanded {
+            border-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(26, 26, 32, 0.5);
+        }
+
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), padding 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 0 32px;
+        }
+
+        .module-card.expanded .module-content {
+            max-height: 1000px;
+            padding-bottom: 32px;
+        }
+
+        .module-content p {
+            margin-bottom: 24px;
+            font-size: 1rem;
+            max-width: 800px;
+        }
+
+        .topics-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .topic-item::before {
+            content: "•";
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* --- Projects Showcase Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .project-card {
+            padding: 32px;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-4px);
+        }
+
+        .project-icon {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- Student Journey Timeline --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--bg-base);
+            border: 3px solid var(--accent-blue);
+            z-index: 3;
+            transition: border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            border-color: var(--accent-purple);
+        }
+
+        .timeline-step {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-step {
+            color: var(--accent-purple);
+        }
+
+        .timeline-card-inner h3 {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        /* --- Limited Seats Banner --- */
+        .banner-section {
+            padding: 40px 0;
+        }
+
+        .glowing-banner {
+            background: linear-gradient(90deg, rgba(41, 151, 255, 0.08) 0%, rgba(191, 90, 242, 0.08) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: 0 0 30px rgba(191, 90, 242, 0.05);
+            animation: pulseGlow 4s infinite alternate ease-in-out;
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff453a;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #ff453a;
+            animation: pulseDot 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% { border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 0 30px rgba(191, 90, 242, 0.05); }
+            100% { border-color: rgba(191, 90, 242, 0.25); box-shadow: 0 0 40px rgba(191, 90, 242, 0.15); }
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* --- Final CTA Section --- */
+        .cta-section {
             text-align: center;
             position: relative;
-            z-index: 1;
-            padding: 120px 24px 40px 24px;
         }
-        .hero-content {
-            max-width: 760px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: heroFadeIn 1s 0.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
+
+        .cta-card {
+            background: radial-gradient(circle at top, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%), var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 32px;
+            padding: 80px 40px;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
         }
-        .hero-content h1 {
-            font-size: 3.8rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 24px;
+
+        .cta-card h2 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            margin-bottom: 16px;
             background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-content p {
-            font-size: 1.3rem;
-            font-weight: 400;
-            line-height: 1.5;
+
+        .cta-card p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 580px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #050507;
+            border-top: 1px solid var(--border-glow);
+            padding: 60px 0 30px 0;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 48px;
-            letter-spacing: -0.01em;
-        }
-        .scroll-down-btn {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: opacity 0.2s ease;
-        }
-        .scroll-down-btn:hover {
-            opacity: 0.8;
         }
 
-        @keyframes heroFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Syllabus Interactive Timeline Framework --- */
-        .syllabus-section {
-            max-width: 840px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            padding: 80px 24px;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 56px;
-        }
-        .timeline-container {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        /* Scroll Reveal Base Engine */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hover-Expand Syllabus Cards & Depth FX */
-        .timeline-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-radius: 18px;
-            padding: 32px;
+        .footer-grid {
             display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 24px;
-            align-items: start;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .timeline-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
-        .card-number {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--accent-blue);
-            background: rgba(41, 151, 255, 0.1);
-            width: 52px;
-            height: 52px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-        }
-        .timeline-card:nth-child(even) .card-number {
-            color: var(--accent-purple);
-            background: rgba(191, 90, 242, 0.1);
-        }
-
-        .card-text h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 8px;
+        .footer-brand h4 {
+            font-size: 1.1rem;
             color: var(--text-primary);
-        }
-        .card-text p {
-            color: var(--text-secondary);
-            line-height: 1.5;
-            font-size: 1rem;
+            margin-bottom: 12px;
         }
 
-        /* Comprehensive syllabus list hidden by default, smoothly shifts on hover */
-        .syllabus-dropdown {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            padding-top: 0;
+        .footer-brand p {
+            max-width: 320px;
+            font-size: 0.85rem;
         }
-        .timeline-card:hover .syllabus-dropdown {
-            max-height: 200px;
-            opacity: 1;
-            padding-top: 16px;
+
+        .footer-links h4 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
         }
-        .syllabus-list {
+
+        .footer-links ul {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 16px;
-        }
-        .syllabus-list li {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .syllabus-list li::before {
-            content: "•";
-            color: var(--text-secondary);
+            gap: 10px;
         }
 
-        /* --- Premium Call to Action Banner --- */
-        .final-cta-container {
-            margin-top: 96px;
-            background: radial-gradient(circle at top, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 100%);
-            border: 1px solid var(--border-glow);
-            border-radius: 24px;
-            padding: 64px 32px;
-            text-align: center;
-            position: relative;
-        }
-        .final-cta-container h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 12px;
-        }
-        .final-cta-container p {
+        .footer-links a {
             color: var(--text-secondary);
-            margin-bottom: 40px;
-            font-size: 1.1rem;
-            max-width: 520px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .cta-main-btn {
-            display: inline-block;
-            background-color: var(--text-primary);
-            color: var(--bg-base);
             text-decoration: none;
-            padding: 14px 32px;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 24px;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .cta-main-btn:hover {
-            transform: scale(1.02);
-            opacity: 0.95;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+            transition: color 0.3s ease;
         }
 
-        /* --- Utilities (Back to top) --- */
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* --- Centered Minimal Footprint --- */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #424245;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Back To Top --- */
         #btn-back-to-top {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 40px;
-            height: 40px;
-            background: rgba(22, 22, 26, 0.8);
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: rgba(30, 30, 35, 0.7);
+            border: 1px solid var(--border-glow);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--border-glow);
             border-radius: 50%;
             color: var(--text-primary);
             display: flex;
@@ -362,20 +780,89 @@
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            z-index: 999;
-            transition: all 0.3s ease;
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         #btn-back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
 
-        /* Mobile Optimization adjustments */
-        @media (max-width: 640px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .hero-content p { font-size: 1.1rem; }
-            .timeline-card { grid-template-columns: 1fr; gap: 16px; text-align: center; justify-items: center; }
-            .final-cta-container h2 { font-size: 1.7rem; }
+        #btn-back-to-top:hover {
+            background: rgba(50, 50, 60, 0.9);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        /* --- Adaptive Layout Breakpoints --- */
+        @media (max-width: 960px) {
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .section-padding { padding: 70px 0; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .navbar { padding: 12px 0; }
+
+            .hamburger { display: flex; }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: rgba(5, 5, 7, 0.96);
+                backdrop-filter: blur(30px);
+                -webkit-backdrop-filter: blur(30px);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 40px;
+                gap: 28px;
+                transition: right 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+                z-index: 1999;
+            }
+
+            .nav-menu.open {
+                right: 0;
+            }
+
+            .nav-actions {
+                margin-right: 40px;
+            }
+
+            .body-nav-open {
+                overflow: hidden;
+            }
+
+            /* Hamburger Animation State */
+            .nav-menu.open ~ .hamburger span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .nav-menu.open ~ .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+            .nav-menu.open ~ .hamburger span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .topics-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; gap: 12px; width: 100%; }
+            .btn-large { width: 100%; }
+            .nav-actions { display: none; }
+            .topics-grid { grid-template-columns: 1fr; }
+            .module-header { padding: 24px; }
+            .module-content { padding: 0 24px; }
         }
     </style>
 </head>
@@ -389,144 +876,517 @@
     </div>
 
     <nav class="navbar">
-        <div class="nav-container">
-            <span class="brand-logo">Code to Creation</span>
-            
-            <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="cta-nav-btn">Register</a>
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">
+                <span>🚀</span> Code to Creation
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="nav-link active">Home</a></li>
+                <li><a href="#why-join" class="nav-link">Benefits</a></li>
+                <li><a href="#curriculum" class="nav-link">Curriculum</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#journey" class="nav-link">Journey</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary">Register</a>
             </div>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
 
     <header class="hero-section">
-        <div class="hero-content">
-            <h1>Engineered From Scratch.</h1>
-            <p>A precision terminal-to-hardware mentorship framework limited to 15 Students. Master functional structural C++ systems, advanced script automation, and localized device biometrics.</p>
-            <a href="#syllabus" class="scroll-down-btn">Curriculum Blueprint ↓</a>
+        <div class="container hero-content">
+            <h1 class="reveal">Learn by Building<br>Real Projects.</h1>
+            <p class="reveal">A hands-on mentorship program designed for students who want practical skills in programming, automation, IoT and AI through project-based learning.</p>
+            <div class="hero-buttons reveal">
+                <a href="#curriculum" class="btn btn-secondary btn-large">Explore Curriculum</a>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Register Now</a>
+            </div>
+            <div class="hero-badges reveal">
+                <div class="badge-glass">✨ 15 Seats Only</div>
+                <div class="badge-glass">📦 4 Modules</div>
+                <div class="badge-glass">🛠️ Hands-On Learning</div>
+                <div class="badge-glass">💻 Project Based</div>
+            </div>
         </div>
     </header>
 
-    <main id="syllabus" class="syllabus-section">
-        <h2 class="section-title">Program Modules</h2>
-        <div class="timeline-container">
-            
-            <div class="timeline-card reveal">
-                <div class="card-number">01</div>
-                <div class="card-text">
-                    <h3>Foundational C++ & Objects</h3>
-                    <p>Build real programmatic logic pipelines. Shift from foundational semantics straight into software runtime architecture design execution principles.</p>
-                    <div class="syllabus-dropdown">
-                        <ul class="syllabus-list">
-                            <li>Data Types, Memory Layouts & Variable Declarations</li>
-                            <li>Conditional Logic Gates & Execution Loop Triggers</li>
-                            <li>Multi-Dimensional Grid Arrays & String Manipulation</li>
-                            <li>OOPs: Classes, Instance Objects & Constructors</li>
-                        </ul>
-                    </div>
+    <section class="section-padding">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card glow-card reveal">
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Limited Seats Allocation</div>
+                </div>
+                <div class="stat-card glow-card reveal">
+                    <div class="stat-number" data-target="4">0</div>
+                    <div class="stat-label">Core Program Modules</div>
+                </div>
+                <div class="stat-card glow-card reveal">
+                    <div class="stat-number" data-target="6">0</div>
+                    <div class="stat-label">Production Projects Built</div>
+                </div>
+                <div class="stat-card glow-card reveal">
+                    <div class="stat-number" data-target="100" data-suffix="%">0</div>
+                    <div class="stat-label">Practical Execution Labs</div>
                 </div>
             </div>
-
-            <div class="timeline-card reveal">
-                <div class="card-number">02</div>
-                <div class="card-text">
-                    <h3>High-Leverage Python Recipes</h3>
-                    <p>Skip the introductory basics entirely. Harness high-leverage scripting workflows built for real-world automation execution frames.</p>
-                    <div class="syllabus-dropdown">
-                        <ul class="syllabus-list">
-                            <li>Automated WhatsApp Scheduling via PyWhatKit</li>
-                            <li>Programmatic TLS Secured Email Servers using SMTP</li>
-                            <li>Intelligent Directory File Parsers mapped by Extension</li>
-                            <li>Local ChatGPT Interface Apps written in Flet</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-card reveal">
-                <div class="card-number">03</div>
-                <div class="card-text">
-                    <h3>Kinetic IoT Architectures</h3>
-                    <p>Bridge pure terminal environments with physical microcontrollers. Deploy a working vehicle over localized wireless networks.</p>
-                    <div class="syllabus-dropdown">
-                        <ul class="syllabus-list">
-                            <li>ESP8266 Microchip Configuration & GPIO Routing</li>
-                            <li>H-Bridge Dual Motor Driver Hardware Integration</li>
-                            <li>Wireless Access Point Network Generation</li>
-                            <li>Ecosystem Integration via ESP8266 WiFi Car App Controls</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-card reveal">
-                <div class="card-number">04</div>
-                <div class="card-text">
-                    <h3>Computer Vision Capstone</h3>
-                    <p>Construct intelligent software authentication locks using native hardware frames without external microcontrollers.</p>
-                    <div class="syllabus-dropdown">
-                        <ul class="syllabus-list">
-                            <li>Laptop Built-in Webcam Video Frame Captures</li>
-                            <li>Facial Characteristics Evaluation via DeepFace Engines</li>
-                            <li>Identity Matching Verification Logic Frameworks</li>
-                            <li>Software Access Event Controls & System Triggers</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
         </div>
+    </section>
 
-        <div class="final-cta-container reveal">
-            <h2>Secure Your Allocation.</h2>
-            <p>Claim your early-bird tier slot and initialize payment verification loops immediately.</p>
+    <section class="section-padding" id="why-join">
+        <div class="container">
+            <h2 class="section-title reveal">Why Join the Framework</h2>
+            <p class="section-subtitle reveal">Skip conventional abstract lectures. Focus on practical pipeline synthesis built for real execution.</p>
             
-            <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="cta-main-btn">Apply for Mentorship</a>
+            <div class="features-grid">
+                <div class="feature-card glow-card reveal">
+                    <span class="feature-icon">💻</span>
+                    <h3>Practical Programming</h3>
+                    <p>Learn structural logic workflows through building. Internalize algorithmic structures via concrete production logic application loops.</p>
+                </div>
+                <div class="feature-card glow-card reveal">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Real Projects</h3>
+                    <p>Abandon textbook examples. Build fully functioning cross-platform automation tools, localized biometric databases, and responsive device networks from scratch.</p>
+                </div>
+                <div class="feature-card glow-card reveal">
+                    <span class="feature-icon">🤝</span>
+                    <h3>Direct Guidance Support</h3>
+                    <p>Access direct code analysis and hardware diagnostics. Clear architecture roadblocks fast with dedicated structural mentorship review cycles.</p>
+                </div>
+                <div class="feature-card glow-card reveal">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Portfolio Building</h3>
+                    <p>Assemble a tangible, public repository footprint of clean production-grade code layers designed to prove capabilities clearly to engineering teams.</p>
+                </div>
             </div>
-    </main>
+        </div>
+    </section>
 
-    <div id="btn-back-to-top">↑</div>
+    <section class="section-padding" id="curriculum">
+        <div class="container">
+            <h2 class="section-title reveal">Program Modules</h2>
+            <p class="section-subtitle reveal">An structured path transitioning from pure foundational logic semantics directly into physical hardware and neural networks.</p>
+
+            <div class="modules-container">
+                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <div class="module-title-block">
+                            <span class="module-icon">💻</span>
+                            <div class="module-info">
+                                <h3>Module 1: C++ Programming Fundamentals</h3>
+                                <p style="font-size:0.85rem; margin:0;">Core Logic Architecture</p>
+                            </div>
+                        </div>
+                        <div class="module-meta">
+                            <span class="difficulty-badge diff-beginner">Beginner</span>
+                            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <p>Master execution mechanics and compilation logic. Shift from variable syntax footprints into functional object models and memory structure lifecycle design elements.</p>
+                        <div class="topics-title">Curriculum Scope Matrix</div>
+                        <div class="topics-grid">
+                            <div class="topic-item">Variables & Data Layouts</div>
+                            <div class="topic-item">Conditional Logic Gates</div>
+                            <div class="topic-item">Execution Control Loops</div>
+                            <div class="topic-item">Multi-Dimensional Arrays</div>
+                            <div class="topic-item">String Handlers</div>
+                            <div class="topic-item">OOP: Core Classes</div>
+                            <div class="topic-item">Instance Objects</div>
+                            <div class="topic-item">Constructor Engines</div>
+                            <div class="topic-item">Functional Mini Projects</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <div class="module-title-block">
+                            <span class="module-icon">🐍</span>
+                            <div class="module-info">
+                                <h3>Module 2: Python Script Automation</h3>
+                                <p style="font-size:0.85rem; margin:0;">High-Leverage Tooling</p>
+                            </div>
+                        </div>
+                        <div class="module-meta">
+                            <span class="difficulty-badge diff-intermediate">Intermediate</span>
+                            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <p>Harness high-leverage scripting APIs. Construct automated distribution modules, handle file network pipelines, and orchestrate server automation tasks.</p>
+                        <div class="topics-title">Curriculum Scope Matrix</div>
+                        <div class="topics-grid">
+                            <div class="topic-item">PyWhatKit Triggers</div>
+                            <div class="topic-item">Secure SMTP Mail Servers</div>
+                            <div class="topic-item">File System Automations</div>
+                            <div class="topic-item">Rest API Integrations</div>
+                            <div class="topic-item">Flet GUI Frame Layouts</div>
+                            <div class="topic-item">Utility Automation Design</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <div class="module-title-block">
+                            <span class="module-icon">🚗</span>
+                            <div class="module-info">
+                                <h3>Module 3: Kinetic IoT Architectures</h3>
+                                <p style="font-size:0.85rem; margin:0;">Hardware Integration Layers</p>
+                            </div>
+                        </div>
+                        <div class="module-meta">
+                            <span class="difficulty-badge diff-intermediate">Intermediate</span>
+                            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <p>Bridge physical firmware scripts with network infrastructure layers. Connect components directly to input/output buses and deploy structural mesh setups on real microcontrollers.</p>
+                        <div class="topics-title">Curriculum Scope Matrix</div>
+                        <div class="topics-grid">
+                            <div class="topic-item">ESP8266 Bus Routing</div>
+                            <div class="topic-item">GPIO Pin Configuration</div>
+                            <div class="topic-item">Sensor Transduction</div>
+                            <div class="topic-item">H-Bridge Driver Mechanics</div>
+                            <div class="topic-item">WiFi Hotspot Generations</div>
+                            <div class="topic-item">WiFi Car Smart System</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                    <div class="module-header">
+                        <div class="module-title-block">
+                            <span class="module-icon">🤖</span>
+                            <div class="module-info">
+                                <h3>Module 4: Computer Vision Capstone</h3>
+                                <p style="font-size:0.85rem; margin:0;">Applied Intelligent Systems</p>
+                            </div>
+                        </div>
+                        <div class="module-meta">
+                            <span class="difficulty-badge diff-advanced">Advanced</span>
+                            <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <p>Construct smart automation setups. Feed continuous video inputs into multi-tiered analytics engines to build functional, edge-deployed physical access verification frameworks.</p>
+                        <div class="topics-title">Curriculum Scope Matrix</div>
+                        <div class="topics-grid">
+                            <div class="topic-item">Webcam Feed Integration</div>
+                            <div class="topic-item">Haar Cascade Classifiers</div>
+                            <div class="topic-item">DeepFace Analysis Engines</div>
+                            <div class="topic-item">Biometric Match Controls</div>
+                            <div class="topic-item">Secure Gate Access Logic</div>
+                            <div class="topic-item">Local AI Interface Layers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="projects">
+        <div class="container">
+            <h2 class="section-title reveal">Production Projects Showcase</h2>
+            <p class="section-subtitle reveal">A visual catalog of software systems engineered from scratch throughout the framework timeline.</p>
+            
+            <div class="projects-grid">
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">📁</span>
+                    <h3>Smart File Organizer</h3>
+                    <p>An intelligent system tool built in Python that automatically scans, maps, and segregates file groups based on extension properties.</p>
+                </div>
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">📧</span>
+                    <h3>Email Automation Tool</h3>
+                    <p>Deploy a programmatic, secure connection tool managing transmission batches using system environment profiles cleanly.</p>
+                </div>
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">💬</span>
+                    <h3>WhatsApp Scheduler</h3>
+                    <p>Build an internal script scheduler utilizing package loops to systematically trigger communications at defined operational time markers.</p>
+                </div>
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">🚗</span>
+                    <h3>WiFi Controlled Car</h3>
+                    <p>A mobile platform operating over a local access layer, running custom tracking logic directly on physical hardware microchips.</p>
+                </div>
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">🤖</span>
+                    <h3>Face Recognition Lock</h3>
+                    <p>An advanced biometric app that checks video inputs against database validation parameters to securely open platform windows.</p>
+                </div>
+                <div class="project-card glow-card reveal">
+                    <span class="project-icon">🖥️</span>
+                    <h3>Desktop Utility Suite</h3>
+                    <p>Design multi-panel configuration views built completely via Flet, interacting smoothly with network database setups.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner-section">
+        <div class="container">
+            <div class="glowing-banner reveal">
+                <div class="banner-content">
+                    <span class="pulse-dot"></span>
+                    <span>Framework Capacity Alert: Only Limited Allocations Available Globally.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="journey">
+        <div class="container">
+            <h2 class="section-title reveal">Student Journey Timeline</h2>
+            <p class="section-subtitle reveal">The exact structural progression pathway mapped from baseline terminal configurations straight into production testing lines.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-step">Step 01</div>
+                    <div class="timeline-card-inner">
+                        <h3>Learn System Fundamentals</h3>
+                        <p>Master pure variable data alignments, loop controls, and logical conditional pathways in high-performance terminal environments.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-step">Step 02</div>
+                    <div class="timeline-card-inner">
+                        <h3>Build Logic Mini Projects</h3>
+                        <p>Synthesize script functions and API engines into modular utility files managing real storage and network tasks successfully.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-step">Step 03</div>
+                    <div class="timeline-card-inner">
+                        <h3>Work Natively with Hardware</h3>
+                        <p>Transition from script layouts into copper tracks. Program real logic engines to directly drive motors and parse physical input signals.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-step">Step 04</div>
+                    <div class="timeline-card-inner">
+                        <h3>Create Vision Authentications</h3>
+                        <p>Integrate video stream components into system validation layers, executing localized classification actions in real time.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-step">Step 05</div>
+                    <div class="timeline-card-inner">
+                        <h3>Deploy Capstone Platforms</h3>
+                        <p>Compile individual software components into a unified, secure project profile, prepared for verification reviews.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container cta-section">
+            <div class="cta-card reveal">
+                <h2>Ready to Start Building?</h2>
+                <p>Join a project-focused learning experience and develop practical skills through guided mentorship.</p>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>Code to Creation</h4>
+                    <p>A precision-focused training structure designed to turn clean logic tracks into production software systems and integrated device matrices.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Curriculum Paths</h4>
+                    <ul>
+                        <li><a href="#curriculum">Core Programming</a></li>
+                        <li><a href="#curriculum">Automation Scripts</a></li>
+                        <li><a href="#curriculum">IoT Architectures</a></li>
+                        <li><a href="#curriculum">Computer Vision</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Direct Contact</h4>
+                    <ul>
+                        <li><a href="mailto:support@codetocreation.io">support@codetocreation.io</a></li>
+                        <li><a href="#journey">Raipur, Chhattisgarh, India</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Engineered natively from scratch.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="btn-back-to-top" title="Return to Top View">↑</div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // --- Cache System Controls ---
             const progressBar = document.getElementById("progress-bar");
             const backToTopBtn = document.getElementById("btn-back-to-top");
+            const navbar = document.querySelector(".navbar");
+            const hamburgerBtn = document.getElementById("hamburgerBtn");
+            const navMenu = document.getElementById("navMenu");
+            const navLinks = document.querySelectorAll(".nav-link");
+            
+            // --- Mobile Drawer Controller Mechanism ---
+            if (hamburgerBtn && navMenu) {
+                const toggleMenuState = () => {
+                    const isNowOpen = navMenu.classList.toggle("open");
+                    document.body.classList.toggle("body-nav-open", isNowOpen);
+                };
+                
+                hamburgerBtn.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    toggleMenuState();
+                });
+                
+                document.querySelectorAll(".nav-link").forEach(link => {
+                    link.addEventListener("click", () => {
+                        if (navMenu.classList.contains("open")) {
+                            toggleMenuState();
+                        }
+                    });
+                });
 
-            // --- Scroll Handling Logic (Progress Bar & Back to Top visibility) ---
-            window.addEventListener("scroll", () => {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                progressBar.style.width = scrolled + "%";
+                document.addEventListener("click", (event) => {
+                    if (navMenu.classList.contains("open") && !navMenu.contains(event.target) && !hamburgerBtn.contains(event.target)) {
+                        toggleMenuState();
+                    }
+                });
+            }
 
-                if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            // --- Calmer Real-time Metrics Increment Engine ---
+            const triggerCounterAcceleration = (element) => {
+                const targetValue = parseInt(element.getAttribute("data-target"), 10);
+                const valueSuffix = element.getAttribute("data-suffix") || "";
+                let baseValue = 0;
+                
+                // Controlled speed increments for smooth, gradual rendering
+                const incrementalStep = targetValue / 65; 
+                
+                const processIncrementTick = () => {
+                    baseValue += incrementalStep;
+                    if (baseValue >= targetValue) {
+                        element.innerText = targetValue + valueSuffix;
+                    } else {
+                        element.innerText = Math.floor(baseValue) + valueSuffix;
+                        requestAnimationFrame(processIncrementTick);
+                    }
+                };
+                requestAnimationFrame(processIncrementTick);
+            };
+
+            // --- Scroll Handling Interface Operations ---
+            const executeScrollEvaluations = () => {
+                const globalScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const structuralScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                
+                if (structuralScrollHeight > 0) {
+                    progressBar.style.width = `${(globalScrollTop / structuralScrollHeight) * 100}%`;
+                }
+
+                if (globalScrollTop > 40) {
+                    navbar.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
                     backToTopBtn.classList.add("visible");
                 } else {
+                    navbar.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
                     backToTopBtn.classList.remove("visible");
                 }
-            });
+            };
 
+            window.addEventListener("scroll", executeScrollEvaluations, { passive: true });
+            
             backToTopBtn.addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
 
-            // --- Scroll Reveal Animation Observer ---
-            const revealOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -20px 0px"
+            // --- Calmer, Eye-Soothing Scroll Reveal Engine ---
+            const presentationObserverOptions = {
+                threshold: 0.12, // Requires more card clearance before animating
+                rootMargin: "0px 0px -25px 0px"
             };
 
-            const revealCallback = (entries, observer) => {
+            const animateElementsOnVisibility = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
+                        
+                        if (entry.target.classList.contains("stat-card")) {
+                            const subCounterElement = entry.target.querySelector(".stat-number");
+                            if (subCounterElement) triggerCounterAcceleration(subCounterElement);
+                        }
                         observer.unobserve(entry.target);
                     }
                 });
             };
 
-            const scrollObserver = new IntersectionObserver(revealCallback, revealOptions);
-            document.querySelectorAll(".reveal").forEach(element => {
-                scrollObserver.observe(element);
-            });
+            const centralElementObserver = new IntersectionObserver(animateElementsOnVisibility, presentationObserverOptions);
+            document.querySelectorAll(".reveal, .stat-card").forEach(item => centralElementObserver.observe(item));
+
+            // --- Active Navigation Link Tracking System ---
+            const trackActiveNavigationStates = () => {
+                const layoutSections = document.querySelectorAll("section, header");
+                const currentScrollY = window.scrollY + 140;
+
+                layoutSections.forEach(currentSection => {
+                    const sectionTopBound = currentSection.offsetTop;
+                    const sectionBottomBound = sectionTopBound + currentSection.offsetHeight;
+                    const targetSectionId = currentSection.getAttribute("id");
+
+                    if (currentScrollY >= sectionTopBound && currentScrollY < sectionBottomBound && targetSectionId) {
+                        navLinks.forEach(linkElement => {
+                            linkElement.classList.remove("active");
+                            if (linkElement.getAttribute("href") === `#${targetSectionId}`) {
+                                linkElement.classList.add("active");
+                            }
+                        });
+                    } else if (window.scrollY < 100) {
+                        navLinks.forEach(linkElement => {
+                            linkElement.classList.remove("active");
+                        });
+                        if (navLinks[0]) navLinks[0].classList.add("active");
+                    }
+                });
+            };
+
+            window.addEventListener("scroll", trackActiveNavigationStates, { passive: true });
         });
+
+        // --- Calmer Accordion Component Engine ---
+        function toggleModule(selectedCardElement) {
+            const currentlyExpandedCard = document.querySelector(".module-card.expanded");
+            
+            if (currentlyExpandedCard && currentlyExpandedCard !== selectedCardElement) {
+                currentlyExpandedCard.classList.remove("expanded");
+            }
+            
+            selectedCardElement.classList.toggle("expanded");
+            
+            setTimeout(() => {
+                window.dispatchEvent(new Event("scroll"));
+            }, 510); // Matches ease curves perfectly to remove sudden viewport layout jumps
+        }
     </script>
 </body>
 </html>
