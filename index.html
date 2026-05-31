@@ -6,33 +6,32 @@
     <title>Code to Creation — Mentorship Bootcamp</title>
     <meta name="referrer" content="no-referrer-when-downgrade">
     <style>
-        /* --- Design System & Variables --- */
+        /* --- Design System & Premium Variables --- */
         :root {
             --bg-base: #000000;
             --bg-surface: #0a0a0c;
-            --bg-card: rgba(22, 22, 26, 0.65);
-            --bg-card-hover: rgba(32, 32, 38, 0.8);
+            --bg-card: rgba(22, 22, 26, 0.55);
+            --bg-card-hover: rgba(32, 32, 38, 0.75);
             --text-primary: #f5f5f7;
             --text-secondary: #86868b;
             --accent-blue: #2997ff;
             --accent-purple: #bf5af2;
-            --accent-purple-glow: rgba(191, 90, 242, 0.15);
-            --accent-blue-glow: rgba(41, 151, 255, 0.15);
-            --border-glow: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.2);
-            --glass-blur: blur(20px);
-            --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            --accent-green: #34c759;
+            --border-glow: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --glass-blur: blur(25px);
+            --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            
+            /* Official Apple Cinematic Motion Physics Curve */
+            --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- Reset & Base Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: var(--font-system);
-            scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
@@ -43,140 +42,100 @@
             letter-spacing: -0.022em;
         }
 
-        /* --- Typography Engine --- */
-        h1, h2, h3 {
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        p {
-            color: var(--text-secondary);
-        }
-
-        /* --- Scrollbar & Utilities --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-base);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2c2c2e;
-            border-radius: 4px;
-        }
-
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-            width: 0%;
-            z-index: 2100;
-            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        /* --- Custom App Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #2c2c2e; border-radius: 4px; }
 
         .container {
             max-width: 1040px;
             margin: 0 auto;
             padding: 0 24px;
             position: relative;
-            z-index: 2;
         }
 
-        .section-padding {
-            padding: 100px 0;
-        }
-
+        .section-padding { padding: 80px 0; }
         .section-title {
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+            font-weight: 700;
             background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .section-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
             text-align: center;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 60px auto;
+            max-width: 640px;
+            margin: 0 auto 56px auto;
+            line-height: 1.5;
         }
 
-        /* --- Canvas Background FX --- */
+        /* --- Native Premium Apple Animation Engine Layouts --- */
+        .app-view {
+            display: none;
+            min-height: calc(100vh - 240px);
+            padding-top: 110px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s var(--apple-ease), transform 0.8s var(--apple-ease);
+        }
+        
+        .app-view.view-active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient Fluid Kinetic Orb Art */
         .orb-container {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
             overflow: hidden;
-            z-index: 0;
+            z-index: -1;
             pointer-events: none;
         }
+        .orb { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.1; }
+        .orb-1 { width: 600px; height: 600px; background: var(--accent-blue); top: -150px; right: -50px; animation: floatOrb 25s infinite alternate ease-in-out; }
+        .orb-2 { width: 700px; height: 700px; background: var(--accent-purple); bottom: -100px; left: -150px; animation: floatOrb 30s infinite alternate-reverse ease-in-out; }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.12;
-            mix-blend-mode: screen;
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 40px) scale(1.08); }
         }
 
-        .orb-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--accent-blue);
-            top: -150px;
-            right: -100px;
-            animation: floatOrb1 25s infinite alternate ease-in-out;
-        }
-
-        .orb-2 {
-            width: 600px;
-            height: 600px;
-            background: var(--accent-purple);
-            top: 30%;
-            left: -200px;
-            animation: floatOrb2 30s infinite alternate ease-in-out;
-        }
-
-        @keyframes floatOrb1 {
-            0% { transform: translateY(0px) scale(1) rotate(0deg); }
-            100% { transform: translateY(60px) scale(1.05) rotate(30deg); }
-        }
-
-        @keyframes floatOrb2 {
-            0% { transform: translateY(0px) scale(1.05) rotate(0deg); }
-            100% { transform: translateY(-70px) scale(0.95) rotate(-30deg); }
-        }
-
-        /* --- Calm, Slow & Eye-Pleasing Transitions --- */
+        /* Eye-Calming Viewport Reveal Engine */
         .reveal {
             opacity: 0;
-            transform: translateY(35px);
-            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(30px);
+            transition: opacity 1.2s var(--apple-ease), transform 1.2s var(--apple-ease);
         }
-
-        .reveal.active {
+        .reveal.revealed-active {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* --- Premium Card Architecture --- */
         .glow-card {
-            position: relative;
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            border-radius: 20px;
-            transition: border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            border-radius: 22px;
+            transition: border-color 0.5s var(--apple-ease), background-color 0.5s var(--apple-ease), transform 0.5s var(--apple-ease);
+        }
+        .glow-card:hover {
+            border-color: var(--border-hover);
+            background-color: var(--bg-card-hover);
+            transform: scale(1.01);
         }
 
-        /* --- Navigation Bar --- */
+        /* --- Navigation Architecture Layout --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -187,50 +146,54 @@
             -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--border-glow);
             z-index: 2000;
-            padding: 16px 0;
-            transition: background-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 18px 0;
+            transition: background-color 0.5s var(--apple-ease);
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .brand-logo {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            letter-spacing: -0.02em;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: opacity 0.3s ease;
         }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            list-style: none;
-        }
-
+        .brand-logo:hover { opacity: 0.8; }
+        .nav-menu { display: flex; align-items: center; gap: 32px; list-style: none; }
         .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.4s var(--apple-ease);
         }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-primary);
+        .nav-link:hover, .nav-link.active-link { color: var(--text-primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background-color: var(--text-primary);
+            transition: width 0.4s var(--apple-ease);
         }
+        .nav-link.active-link::after { width: 100%; }
 
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            width: 0%;
+            z-index: 2100;
+            transition: width 0.6s var(--apple-ease);
         }
 
         .btn {
@@ -240,636 +203,124 @@
             text-decoration: none;
             font-weight: 500;
             border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.4s var(--apple-ease);
             cursor: pointer;
         }
-
-        .btn-primary {
-            background-color: var(--text-primary);
-            color: var(--bg-base);
-            padding: 8px 18px;
-            font-size: 0.85rem;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
-
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-            border: 1px solid var(--border-glow);
-            padding: 12px 24px;
-            font-size: 0.95rem;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-color: var(--border-hover);
-        }
-
-        .btn-large {
-            padding: 14px 32px;
-            font-size: 1rem;
-            border-radius: 30px;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            padding: 4px;
-            z-index: 2001;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 22px;
-            height: 2px;
-            background-color: var(--text-primary);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* --- Hero Section --- */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 120px;
-            padding-bottom: 60px;
-            position: relative;
-        }
-
-        .hero-content {
-            text-align: center;
-            max-width: 840px;
-            margin: 0 auto;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.8rem, 6vw, 4.8rem);
-            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 24px;
-        }
-
-        .hero-content p {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            max-width: 680px;
-            margin: 0 auto 40px auto;
-            line-height: 1.4;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .hero-badges {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .badge-glass {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glow);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* --- Stats Section --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .stat-card {
-            padding: 40px 24px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* --- Why Join Section --- */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            padding: 40px;
-        }
-
-        .feature-card:hover {
-            border-color: var(--border-hover);
-            background-color: var(--bg-card-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-        }
-
-        /* --- Program Modules Section --- */
-        .modules-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .module-card {
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .module-header {
-            padding: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .module-title-block {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .module-icon {
-            font-size: 1.8rem;
-        }
-
-        .module-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-        }
-
-        .module-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .difficulty-badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .diff-beginner { background: rgba(52, 199, 89, 0.15); color: #34c759; }
-        .diff-intermediate { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; }
-        .diff-advanced { background: rgba(255, 69, 58, 0.15); color: #ff453a; }
-
-        .arrow-icon {
-            width: 24px;
-            height: 24px;
-            stroke: var(--text-secondary);
-            fill: none;
-            stroke-width: 2;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .module-card.expanded .arrow-icon {
-            transform: rotate(180deg);
-            stroke: var(--text-primary);
-        }
-
-        .module-card.expanded {
-            border-color: rgba(255, 255, 255, 0.15);
-            background-color: rgba(26, 26, 32, 0.5);
-        }
-
-        .module-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), padding 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            padding: 0 32px;
-        }
-
-        .module-card.expanded .module-content {
-            max-height: 1000px;
-            padding-bottom: 32px;
-        }
-
-        .module-content p {
-            margin-bottom: 24px;
-            font-size: 1rem;
-            max-width: 800px;
-        }
-
-        .topics-title {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .topics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .topic-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .topic-item::before {
-            content: "•";
-            color: var(--accent-blue);
-            font-weight: bold;
-        }
-
-        /* --- Projects Showcase Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .project-card {
-            padding: 32px;
-        }
-
-        .project-card:hover {
-            border-color: var(--border-hover);
-            background-color: var(--bg-card-hover);
-            transform: translateY(-4px);
-        }
-
-        .project-icon {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .project-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-        }
-
-        /* --- Student Journey Timeline --- */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-left: 32px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 8px;
-            bottom: 8px;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 40px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -32px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: var(--bg-base);
-            border: 3px solid var(--accent-blue);
-            z-index: 3;
-            transition: border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
-            border-color: var(--accent-purple);
-        }
-
-        .timeline-step {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-step {
-            color: var(--accent-purple);
-        }
-
-        .timeline-card-inner h3 {
-            font-size: 1.3rem;
-            margin-bottom: 6px;
-        }
-
-        /* --- Limited Seats Banner --- */
-        .banner-section {
-            padding: 40px 0;
-        }
-
-        .glowing-banner {
-            background: linear-gradient(90deg, rgba(41, 151, 255, 0.08) 0%, rgba(191, 90, 242, 0.08) 100%);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: 0 0 30px rgba(191, 90, 242, 0.05);
-            animation: pulseGlow 4s infinite alternate ease-in-out;
-        }
-
-        .banner-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .pulse-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #ff453a;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #ff453a;
-            animation: pulseDot 2s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulseGlow {
-            0% { border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 0 30px rgba(191, 90, 242, 0.05); }
-            100% { border-color: rgba(191, 90, 242, 0.25); box-shadow: 0 0 40px rgba(191, 90, 242, 0.15); }
-        }
-
-        @keyframes pulseDot {
-            0% { transform: scale(0.9); opacity: 0.5; }
-            100% { transform: scale(1.15); opacity: 1; }
-        }
-
-        /* --- Final CTA Section --- */
-        .cta-section {
-            text-align: center;
-            position: relative;
-        }
-
-        .cta-card {
-            background: radial-gradient(circle at top, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%), var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 32px;
-            padding: 80px 40px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-        }
-
-        .cta-card h2 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .cta-card p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            max-width: 580px;
-            margin: 0 auto 40px auto;
-        }
-
-        /* --- Footer --- */
-        .footer {
-            background-color: #050507;
-            border-top: 1px solid var(--border-glow);
-            padding: 60px 0 30px 0;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand h4 {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-
-        .footer-brand p {
-            max-width: 320px;
-            font-size: 0.85rem;
-        }
-
-        .footer-links h4 {
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* --- Centered Minimal Footprint --- */
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            padding-top: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .footer-bottom p {
-            font-size: 0.8rem;
-            color: #424245;
-            text-align: center;
-            letter-spacing: 0.05em;
-        }
-
-        /* --- Back To Top --- */
-        #btn-back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 44px;
-            height: 44px;
-            background: rgba(30, 30, 35, 0.7);
-            border: 1px solid var(--border-glow);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border-radius: 50%;
-            color: var(--text-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1000;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        #btn-back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+        .btn-primary { background-color: var(--text-primary); color: var(--bg-base); padding: 8px 22px; font-size: 0.85rem; }
+        .btn-primary:hover { background-color: #ffffff; transform: scale(1.03); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
+        .btn-secondary { background-color: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-glow); padding: 14px 32px; font-size: 0.95rem; border-radius: 30px; }
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.12); border-color: var(--border-hover); transform: scale(1.01); }
+        .btn-large { padding: 16px 36px; font-size: 1rem; border-radius: 30px; width: 100%; max-width: 320px; }
+
+        /* --- Home Page UI Elements --- */
+        .hero-section { text-align: center; padding: 40px 0; }
+        .hero-title { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.1; margin-bottom: 24px; background: linear-gradient(180deg, #ffffff 0%, #86868b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; letter-spacing: -0.03em; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 56px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+        .stat-card { padding: 40px 24px; text-align: center; }
+        .stat-number { font-size: 2.8rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; letter-spacing: -0.02em; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+
+        /* --- Day-Wise Focus Curriculum Layout --- */
+        .modules-container { display: flex; flex-direction: column; gap: 20px; }
+        .module-card { overflow: hidden; }
+        .module-header { padding: 28px 36px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .module-card:hover .module-header { background-color: rgba(255,255,255,0.01); }
+        .module-title-block { display: flex; align-items: center; gap: 20px; }
+        .module-icon { font-size: 1.6rem; }
+        .module-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.01em; }
+        .module-info p { font-size: 0.85rem; color: var(--accent-blue); font-weight: 500; }
+        .difficulty-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+        .diff-beginner { background: rgba(52, 199, 89, 0.1); color: var(--accent-green); }
+        .diff-intermediate { background: rgba(255, 159, 10, 0.1); color: #ff9f0a; }
+        .diff-advanced { background: rgba(255, 69, 58, 0.1); color: #ff453a; }
+        .arrow-icon { width: 22px; height: 22px; stroke: var(--text-secondary); fill: none; stroke-width: 2; transition: transform 0.5s var(--apple-ease); }
+        .module-card.expanded .arrow-icon { transform: rotate(180deg); stroke: var(--text-primary); }
+        
+        .module-content { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--apple-ease), padding 0.6s var(--apple-ease); padding: 0 36px; }
+        .module-card.expanded .module-content { max-height: 1200px; padding-bottom: 36px; }
+        .module-desc { margin-bottom: 24px; font-size: 1rem; line-height: 1.6; color: var(--text-secondary); }
+        
+        .day-timeline { display: flex; flex-direction: column; gap: 14px; border-left: 1px solid rgba(255,255,255,0.08); padding-left: 20px; margin-top: 12px; }
+        .day-node { font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); transform: translateX(-5px); opacity: 0; transition: all 0.5s var(--apple-ease); }
+        .module-card.expanded .day-node { transform: translateX(0); opacity: 1; }
+        
+        .module-card.expanded .day-node:nth-child(1) { transition-delay: 0.05s; }
+        .module-card.expanded .day-node:nth-child(2) { transition-delay: 0.10s; }
+        .module-card.expanded .day-node:nth-child(3) { transition-delay: 0.15s; }
+        .module-card.expanded .day-node:nth-child(4) { transition-delay: 0.20s; }
+        .module-card.expanded .day-node:nth-child(5) { transition-delay: 0.25s; }
+        .module-card.expanded .day-node:nth-child(6) { transition-delay: 0.30s; }
+        
+        .day-range { color: var(--text-primary); font-weight: 600; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 3px 10px; border-radius: 8px; margin-right: 10px; display: inline-block; letter-spacing: 0.02em; }
+
+        /* --- Fee Structure & Referral Dashboard Matrix --- */
+        .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-bottom: 36px; }
+        .price-card { padding: 44px; position: relative; }
+        .price-badge { position: absolute; top: 24px; right: 24px; background: rgba(41, 151, 255, 0.08); color: var(--accent-blue); font-size: 0.75rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(41,151,255,0.12); }
+        .price-badge.green { background: rgba(52, 199, 89, 0.08); color: var(--accent-green); border-color: rgba(52, 199, 89, 0.12); }
+        .price-title { font-size: 1.25rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+        .price-value { font-size: 3.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px; letter-spacing: -0.02em; }
+        .price-features { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 0.95rem; color: var(--text-secondary); }
+        .price-features li::before { content: "✓ "; color: var(--accent-blue); font-weight: bold; margin-right: 6px; }
+        
+        .pricing-action-container { display: flex; justify-content: center; margin-bottom: 12px; }
+
+        .referral-box { background: linear-gradient(135deg, rgba(41,151,255,0.02) 0%, rgba(191,90,242,0.02) 100%); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 44px; margin-top: 40px; }
+        .ref-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .ref-title-block h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+        .ref-cap-pill { background: rgba(191, 90, 242, 0.08); color: var(--accent-purple); font-size: 0.8rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(191,90,242,0.12); }
+        .ref-rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+        .rule-card { padding: 24px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); border-radius: 16px; transition: border-color 0.4s ease; }
+        .rule-card:hover { border-color: rgba(255,255,255,0.08); }
+        .rule-num { font-size: 0.75rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .rule-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
+
+        /* --- Final Integrated CTA Section --- */
+        .cta-wrapper { text-align: center; margin-top: 64px; padding: 48px 24px 0 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .cta-wrapper h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.02em; }
+        .cta-wrapper p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+        /* --- Projects Grid UI Layout --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .project-card { padding: 36px 28px; }
+        .project-icon { font-size: 2rem; margin-bottom: 18px; display: inline-block; }
+        .project-card h3 { font-size: 1.25rem; margin-bottom: 10px; font-weight: 600; }
+        .project-card p { font-size: 0.9rem; line-height: 1.45; color: var(--text-secondary); }
+
+        /* --- Hamburger Mobile Architecture --- */
+        .hamburger { display: none; flex-direction: column; gap: 5px; border: none; background: transparent; cursor: pointer; padding: 6px; z-index: 2002; }
+        .hamburger span { display: block; width: 22px; height: 2px; background-color: var(--text-primary); transition: all 0.4s var(--apple-ease); }
+        
+        /* --- Responsive View Control Mappers --- */
+        @media (max-width: 920px) {
+            .projects-grid, .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .ref-rules-grid { grid-template-columns: 1fr; gap: 16px; }
         }
-
-        #btn-back-to-top:hover {
-            background: rgba(50, 50, 60, 0.9);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        /* --- Adaptive Layout Breakpoints --- */
-        @media (max-width: 960px) {
-            .projects-grid { grid-template-columns: repeat(2, 1fr); }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
         @media (max-width: 768px) {
-            .section-padding { padding: 70px 0; }
-            .features-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-            .navbar { padding: 12px 0; }
-
             .hamburger { display: flex; }
-            
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 280px;
-                height: 100vh;
-                background-color: rgba(5, 5, 7, 0.96);
-                backdrop-filter: blur(30px);
-                -webkit-backdrop-filter: blur(30px);
-                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-start;
-                padding: 40px;
-                gap: 28px;
-                transition: right 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-                z-index: 1999;
-            }
-
-            .nav-menu.open {
-                right: 0;
-            }
-
-            .nav-actions {
-                margin-right: 40px;
-            }
-
-            .body-nav-open {
-                overflow: hidden;
-            }
-
-            /* Hamburger Animation State */
-            .nav-menu.open ~ .hamburger span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-            .nav-menu.open ~ .hamburger span:nth-child(2) {
-                opacity: 0;
-            }
-            .nav-menu.open ~ .hamburger span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-            
-            .topics-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background-color: rgba(5,5,7,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; justify-content: center; align-items: flex-start; padding: 40px; gap: 28px; transition: right 0.5s var(--apple-ease); box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
+            .nav-menu.drawer-open { right: 0; }
+            .nav-menu.drawer-open ~ .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .nav-menu.drawer-open ~ .hamburger span:nth-child(2) { opacity: 0; }
+            .nav-menu.drawer-open ~ .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         }
-
         @media (max-width: 480px) {
-            .projects-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .hero-buttons { flex-direction: column; gap: 12px; width: 100%; }
-            .btn-large { width: 100%; }
-            .nav-actions { display: none; }
-            .topics-grid { grid-template-columns: 1fr; }
-            .module-header { padding: 24px; }
-            .module-content { padding: 0 24px; }
+            .projects-grid, .stats-grid { grid-template-columns: 1fr; }
+            .module-header { padding: 24px 20px; }
+            .module-content { padding: 0 20px; }
+            .hero-buttons { flex-direction: column; width: 100%; align-items: center; }
         }
+
+        /* --- Structural Footer --- */
+        .footer { border-top: 1px solid var(--border-glow); padding: 48px 0; font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 100px; }
+        .footer p { color: #424245; letter-spacing: 0.05em; font-weight: 500; }
     </style>
 </head>
 <body>
 
     <div id="progress-bar"></div>
-
     <div class="orb-container">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -877,20 +328,19 @@
 
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="#" class="brand-logo">
+            <a onclick="navigateToView('home')" class="brand-logo" style="cursor:pointer;">
                 <span>🚀</span> Code to Creation
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#" class="nav-link active">Home</a></li>
-                <li><a href="#why-join" class="nav-link">Benefits</a></li>
-                <li><a href="#curriculum" class="nav-link">Curriculum</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#journey" class="nav-link">Journey</a></li>
+                <li><a onclick="navigateToView('home')" class="nav-link" id="link-home">Home</a></li>
+                <li><a onclick="navigateToView('curriculum')" class="nav-link" id="link-curriculum">Curriculum</a></li>
+                <li><a onclick="navigateToView('pricing')" class="nav-link" id="link-pricing">Fee Structure</a></li>
+                <li><a onclick="navigateToView('projects')" class="nav-link" id="link-projects">Projects</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary">Register</a>
             </div>
-            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open Link Drawer">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -898,89 +348,57 @@
         </div>
     </nav>
 
-    <header class="hero-section">
-        <div class="container hero-content">
-            <h1 class="reveal">Learn by Building<br>Real Projects.</h1>
-            <p class="reveal">A hands-on mentorship program designed for students who want practical skills in programming, automation, IoT and AI through project-based learning.</p>
+    <main class="app-view container" id="view-home">
+        <section class="hero-section">
+            <h1 class="hero-title reveal">Learn by Building<br>Real Projects.</h1>
+            <p class="section-subtitle reveal">A professional production-focused training engine designed to turn absolute syntax logic tracks into physical device matrices and intelligent programs.</p>
             <div class="hero-buttons reveal">
-                <a href="#curriculum" class="btn btn-secondary btn-large">Explore Curriculum</a>
-                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Register Now</a>
+                <button onclick="navigateToView('curriculum')" class="btn btn-secondary">Explore Day-Wise Map</button>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary" style="padding:14px 28px; border-radius:30px; font-weight:600;">Register Now</a>
             </div>
             <div class="hero-badges reveal">
-                <div class="badge-glass">✨ 15 Seats Only</div>
-                <div class="badge-glass">📦 4 Modules</div>
-                <div class="badge-glass">🛠️ Hands-On Learning</div>
-                <div class="badge-glass">💻 Project Based</div>
+                <div class="badge-glass">15 Seats Only</div>
+                <div class="badge-glass">4 Core Modules</div>
+                <div class="badge-glass">Hands-On Execution</div>
+                <div class="badge-glass">Premium Fluid Motion</div>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <section class="section-padding">
-        <div class="container">
+        <section class="section-padding">
             <div class="stats-grid">
                 <div class="stat-card glow-card reveal">
-                    <div class="stat-number" data-target="15">0</div>
-                    <div class="stat-label">Limited Seats Allocation</div>
+                    <div class="stat-number animated-counter" data-target="15">0</div>
+                    <div class="stat-label">Batch Seat Allocation</div>
                 </div>
                 <div class="stat-card glow-card reveal">
-                    <div class="stat-number" data-target="4">0</div>
-                    <div class="stat-label">Core Program Modules</div>
+                    <div class="stat-number animated-counter" data-target="45">0</div>
+                    <div class="stat-label">Days Total Runtime</div>
                 </div>
                 <div class="stat-card glow-card reveal">
-                    <div class="stat-number" data-target="6">0</div>
-                    <div class="stat-label">Production Projects Built</div>
+                    <div class="stat-number animated-counter" data-target="6">0</div>
+                    <div class="stat-label">Production Apps Formed</div>
                 </div>
                 <div class="stat-card glow-card reveal">
-                    <div class="stat-number" data-target="100" data-suffix="%">0</div>
-                    <div class="stat-label">Practical Execution Labs</div>
+                    <div class="stat-number animated-counter" data-target="100" data-suffix="%">0</div>
+                    <div class="stat-label">Practical Source Labs</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section class="section-padding" id="why-join">
-        <div class="container">
-            <h2 class="section-title reveal">Why Join the Framework</h2>
-            <p class="section-subtitle reveal">Skip conventional abstract lectures. Focus on practical pipeline synthesis built for real execution.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card glow-card reveal">
-                    <span class="feature-icon">💻</span>
-                    <h3>Practical Programming</h3>
-                    <p>Learn structural logic workflows through building. Internalize algorithmic structures via concrete production logic application loops.</p>
-                </div>
-                <div class="feature-card glow-card reveal">
-                    <span class="feature-icon">🚀</span>
-                    <h3>Real Projects</h3>
-                    <p>Abandon textbook examples. Build fully functioning cross-platform automation tools, localized biometric databases, and responsive device networks from scratch.</p>
-                </div>
-                <div class="feature-card glow-card reveal">
-                    <span class="feature-icon">🤝</span>
-                    <h3>Direct Guidance Support</h3>
-                    <p>Access direct code analysis and hardware diagnostics. Clear architecture roadblocks fast with dedicated structural mentorship review cycles.</p>
-                </div>
-                <div class="feature-card glow-card reveal">
-                    <span class="feature-icon">🎯</span>
-                    <h3>Portfolio Building</h3>
-                    <p>Assemble a tangible, public repository footprint of clean production-grade code layers designed to prove capabilities clearly to engineering teams.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" id="curriculum">
-        <div class="container">
+    <main class="app-view container" id="view-curriculum">
+        <section class="section-padding">
             <h2 class="section-title reveal">Program Modules</h2>
             <p class="section-subtitle reveal">An structured path transitioning from pure foundational logic semantics directly into physical hardware and neural networks.</p>
 
             <div class="modules-container">
-                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                <div class="module-card glow-card reveal" onclick="toggleAccordionElement(this)">
                     <div class="module-header">
                         <div class="module-title-block">
                             <span class="module-icon">💻</span>
                             <div class="module-info">
                                 <h3>Module 1: C++ Programming Fundamentals</h3>
-                                <p style="font-size:0.85rem; margin:0;">Core Logic Architecture</p>
+                                <p>Duration Matrix: Day 01 – Day 25</p>
                             </div>
                         </div>
                         <div class="module-meta">
@@ -989,29 +407,28 @@
                         </div>
                     </div>
                     <div class="module-content">
-                        <p>Master execution mechanics and compilation logic. Shift from variable syntax footprints into functional object models and memory structure lifecycle design elements.</p>
-                        <div class="topics-title">Curriculum Scope Matrix</div>
-                        <div class="topics-grid">
-                            <div class="topic-item">Variables & Data Layouts</div>
-                            <div class="topic-item">Conditional Logic Gates</div>
-                            <div class="topic-item">Execution Control Loops</div>
-                            <div class="topic-item">Multi-Dimensional Arrays</div>
-                            <div class="topic-item">String Handlers</div>
-                            <div class="topic-item">OOP: Core Classes</div>
-                            <div class="topic-item">Instance Objects</div>
-                            <div class="topic-item">Constructor Engines</div>
-                            <div class="topic-item">Functional Mini Projects</div>
+                        <p class="module-desc">Learn the fundamentals of programming, understand how software works, and build confidence with object-oriented programming through practical examples and projects.</p>
+                        <div class="topics-title">Day-Centric Focus Tracker</div>
+                        <div class="day-timeline">
+                            <div class="day-node"><span class="day-range">Days 01 – 03</span>VS Code environment integration, compiler configuration loops, and programming theory basics.</div>
+                            <div class="day-node"><span class="day-range">Days 04 – 06</span>Core primitive layouts, memory storage configurations, and variables & data types.</div>
+                            <div class="day-node"><span class="day-range">Days 07 – 10</span>Conditional control logic gates, runtime checks, execution loops, and switch routing.</div>
+                            <div class="day-node"><span class="day-range">Days 11 – 13</span>Multi-Dimensional spatial structures, indices tracking maps, and 1D/2D arrays.</div>
+                            <div class="day-node"><span class="day-range">Days 14 – 16</span>Processing character buffers, continuous tokens tracking, and native string manipulation layers.</div>
+                            <div class="day-node"><span class="day-range">Days 17 – 19</span>High-performance indexing scripts, logic checks, and fundamental searching & sorting algorithms.</div>
+                            <div class="day-node"><span class="day-range">Days 20 – 21</span>Custom memory blueprint maps, context layout scoping lines, and OOP classes & objects.</div>
+                            <div class="day-node"><span class="day-range">Days 21 – 25</span>Implementing the 4 pillars of OOPs (Encapsulation, Inheritance, Polymorphism, and Abstraction).</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                <div class="module-card glow-card reveal" onclick="toggleAccordionElement(this)">
                     <div class="module-header">
                         <div class="module-title-block">
                             <span class="module-icon">🐍</span>
                             <div class="module-info">
                                 <h3>Module 2: Python Script Automation</h3>
-                                <p style="font-size:0.85rem; margin:0;">High-Leverage Tooling</p>
+                                <p>Duration Matrix: Day 26 – Day 40</p>
                             </div>
                         </div>
                         <div class="module-meta">
@@ -1020,26 +437,24 @@
                         </div>
                     </div>
                     <div class="module-content">
-                        <p>Harness high-leverage scripting APIs. Construct automated distribution modules, handle file network pipelines, and orchestrate server automation tasks.</p>
-                        <div class="topics-title">Curriculum Scope Matrix</div>
-                        <div class="topics-grid">
-                            <div class="topic-item">PyWhatKit Triggers</div>
-                            <div class="topic-item">Secure SMTP Mail Servers</div>
-                            <div class="topic-item">File System Automations</div>
-                            <div class="topic-item">Rest API Integrations</div>
-                            <div class="topic-item">Flet GUI Frame Layouts</div>
-                            <div class="topic-item">Utility Automation Design</div>
+                        <p class="module-desc">Harness high-leverage scripting utilities, asynchronous automation modules, and design modern graphic layouts inside real tools.</p>
+                        <div class="topics-title">Day-Centric Focus Tracker</div>
+                        <div class="day-timeline">
+                            <div class="day-node"><span class="day-range">Days 26 – 30</span>Python syntax abstractions, script parsing pipelines, and local context handling APIs.</div>
+                            <div class="day-node"><span class="day-range">Days 31 – 33</span>Automating communication protocols programmatically using background PyWhatKit engine triggers.</div>
+                            <div class="day-node"><span class="day-range">Days 34 – 36</span>Assembling secure programmatic SMTP server mail distribution grids for batch delivery.</div>
+                            <div class="day-node"><span class="day-range">Days 37 – 40</span>Architecting secure desktop application control sheets and user elements utilizing Flet layers.</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                <div class="module-card glow-card reveal" onclick="toggleAccordionElement(this)">
                     <div class="module-header">
                         <div class="module-title-block">
                             <span class="module-icon">🚗</span>
                             <div class="module-info">
-                                <h3>Module 3: Kinetic IoT Architectures</h3>
-                                <p style="font-size:0.85rem; margin:0;">Hardware Integration Layers</p>
+                                <h3>Module 3: Kinetic IoT Architecture</h3>
+                                <p>Duration Matrix: Day 41 – Day 42</p>
                             </div>
                         </div>
                         <div class="module-meta">
@@ -1048,26 +463,22 @@
                         </div>
                     </div>
                     <div class="module-content">
-                        <p>Bridge physical firmware scripts with network infrastructure layers. Connect components directly to input/output buses and deploy structural mesh setups on real microcontrollers.</p>
-                        <div class="topics-title">Curriculum Scope Matrix</div>
-                        <div class="topics-grid">
-                            <div class="topic-item">ESP8266 Bus Routing</div>
-                            <div class="topic-item">GPIO Pin Configuration</div>
-                            <div class="topic-item">Sensor Transduction</div>
-                            <div class="topic-item">H-Bridge Driver Mechanics</div>
-                            <div class="topic-item">WiFi Hotspot Generations</div>
-                            <div class="topic-item">WiFi Car Smart System</div>
+                        <p class="module-desc">Bridge custom firmware processing directly with physical hardware copper tracks, network layers, and smart microcontrollers.</p>
+                        <div class="topics-title">Day-Centric Focus Tracker</div>
+                        <div class="day-timeline">
+                            <div class="day-node"><span class="day-range">Day 41</span>Microcontroller structural setup, processing ESP8266 logic configurations, and system bus routing parameters.</div>
+                            <div class="day-node"><span class="day-range">Day 42</span>Natively handling GPIO pin tracks, processing sensor signals, managing H-Bridge car drivers, and launching a remote WiFi controlled car network.</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="module-card glow-card reveal" onclick="toggleModule(this)">
+                <div class="module-card glow-card reveal" onclick="toggleAccordionElement(this)">
                     <div class="module-header">
                         <div class="module-title-block">
                             <span class="module-icon">🤖</span>
                             <div class="module-info">
-                                <h3>Module 4: Computer Vision Capstone</h3>
-                                <p style="font-size:0.85rem; margin:0;">Applied Intelligent Systems</p>
+                                <h3>Module 4: Computer Vision Capstone & Local AI</h3>
+                                <p>Duration Matrix: Day 43 – Day 45</p>
                             </div>
                         </div>
                         <div class="module-meta">
@@ -1076,24 +487,97 @@
                         </div>
                     </div>
                     <div class="module-content">
-                        <p>Construct smart automation setups. Feed continuous video inputs into multi-tiered analytics engines to build functional, edge-deployed physical access verification frameworks.</p>
-                        <div class="topics-title">Curriculum Scope Matrix</div>
-                        <div class="topics-grid">
-                            <div class="topic-item">Webcam Feed Integration</div>
-                            <div class="topic-item">Haar Cascade Classifiers</div>
-                            <div class="topic-item">DeepFace Analysis Engines</div>
-                            <div class="topic-item">Biometric Match Controls</div>
-                            <div class="topic-item">Secure Gate Access Logic</div>
-                            <div class="topic-item">Local AI Interface Layers</div>
+                        <p class="module-desc">Feed continuous video inputs directly into deep localized classification frameworks to execute validation parameters in real-time.</p>
+                        <div class="topics-title">Day-Centric Focus Tracker</div>
+                        <div class="day-timeline">
+                            <div class="day-node"><span class="day-range">Day 43</span>Connecting video stream frames, camera configuration checks, and OpenCV pixel array processing logic loops.</div>
+                            <div class="day-node"><span class="day-range">Day 44</span>Deploying edge neural analytics via localized Haar Cascade Classifiers and DeepFace match layers.</div>
+                            <div class="day-node"><span class="day-range">Day 45</span>Capstone Loop Integration: Mapping validation outputs directly onto hardware microchips to form a secure physical face-unlock biometric access car latch.</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="section-padding" id="projects">
-        <div class="container">
+            <div class="cta-wrapper reveal" id="curriculum-cta-anchor">
+                <h3>Ready to Claim Your Allocation?</h3>
+                <p>Begin with clear logic modules, advance through integrated device pipelines, and compile your capstone review line cleanly.</p>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
+            </div>
+        </section>
+    </main>
+
+    <main class="app-view container" id="view-pricing">
+        <section class="section-padding">
+            <h2 class="section-title reveal">Transparent Pricing</h2>
+            <p class="section-subtitle reveal">Secure access tiers optimized to scale skills without hidden financial parameters. Built natively with clear incentives.</p>
+
+            <div class="pricing-grid">
+                <div class="price-card glow-card reveal">
+                    <div class="price-badge green">Dynamic Delta Option</div>
+                    <div class="price-title">First Admitted Seat</div>
+                    <div class="price-value">₹2,500</div>
+                    <ul class="price-features">
+                        <li>Instant Early-Bird Allocation Tier</li>
+                        <li>Full Access to 45 Practical Day Logs</li>
+                        <li>Hardware Testing Kit Deployments</li>
+                        <li>Direct Code Verification Matrix Cycles</li>
+                    </ul>
+                </div>
+
+                <div class="price-card glow-card reveal">
+                    <div class="price-badge">Standard Scale</div>
+                    <div class="price-title">Remaining General Seats</div>
+                    <div class="price-value">₹3,000</div>
+                    <ul class="price-features">
+                        <li>Standard Enrollment Track Access</li>
+                        <li>Complete Multi-View Portfolio Projects</li>
+                        <li>Full Component Pinboard Access Channels</li>
+                        <li>Unlimited Live Roadblock Clearance Debugs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pricing-action-container reveal">
+                <button onclick="smoothScrollToCtaAnchor('pricing-cta-anchor')" class="btn btn-primary btn-large" style="max-width: 400px; color:#000000; font-weight:600;">Secure Registration Allocation Slot</button>
+            </div>
+
+            <div class="referral-box reveal">
+                <div class="ref-header">
+                    <div class="ref-title-block">
+                        <h3>Referral Sharing Protocol</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Earn dynamic tuition balance deductions while engineering together.</p>
+                    </div>
+                    <div class="ref-cap-pill">Maximum Cap: ₹1,500 Return Limit</div>
+                </div>
+                
+                <div class="price-value" style="font-size:2rem; color:var(--accent-purple);">₹500 <span style="font-size:1rem; color:var(--text-secondary); font-weight:normal;">Earned Per Successful Peer Onboarding</span></div>
+                
+                <div class="ref-rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-num">Requirement 01</div>
+                        <p>To authorize any affiliate referral token credit generation loops, your profile must be successfully enrolled in the active batch first.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-num">Mechanism 02</div>
+                        <p>Your referred student completes their registration form and maps your verified entry token onto their secure transaction panel checklist.</p>
+                    </div>
+                    <div class="rule-card">
+                        <div class="rule-num">Threshold 03</div>
+                        <p>Receive an instantaneous ₹500 rebate track ledger credit back. You can repeat this loop up to 3 times to claim a max reward pool of ₹1,500 total value.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-wrapper reveal" id="pricing-cta-anchor">
+                <h3>Lock in Current Pricing Levels</h3>
+                <p>Register now to secure your priority baseline seats before allocations transition automatically to general pricing thresholds.</p>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
+            </div>
+        </section>
+    </main>
+
+    <main class="app-view container" id="view-projects">
+        <section class="section-padding">
             <h2 class="section-title reveal">Production Projects Showcase</h2>
             <p class="section-subtitle reveal">A visual catalog of software systems engineered from scratch throughout the framework timeline.</p>
             
@@ -1129,264 +613,144 @@
                     <p>Design multi-panel configuration views built completely via Flet, interacting smoothly with network database setups.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="banner-section">
-        <div class="container">
-            <div class="glowing-banner reveal">
-                <div class="banner-content">
-                    <span class="pulse-dot"></span>
-                    <span>Framework Capacity Alert: Only Limited Allocations Available Globally.</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding" id="journey">
-        <div class="container">
-            <h2 class="section-title reveal">Student Journey Timeline</h2>
-            <p class="section-subtitle reveal">The exact structural progression pathway mapped from baseline terminal configurations straight into production testing lines.</p>
-            
-            <div class="timeline">
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-step">Step 01</div>
-                    <div class="timeline-card-inner">
-                        <h3>Learn System Fundamentals</h3>
-                        <p>Master pure variable data alignments, loop controls, and logical conditional pathways in high-performance terminal environments.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-step">Step 02</div>
-                    <div class="timeline-card-inner">
-                        <h3>Build Logic Mini Projects</h3>
-                        <p>Synthesize script functions and API engines into modular utility files managing real storage and network tasks successfully.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-step">Step 03</div>
-                    <div class="timeline-card-inner">
-                        <h3>Work Natively with Hardware</h3>
-                        <p>Transition from script layouts into copper tracks. Program real logic engines to directly drive motors and parse physical input signals.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-step">Step 04</div>
-                    <div class="timeline-card-inner">
-                        <h3>Create Vision Authentications</h3>
-                        <p>Integrate video stream components into system validation layers, executing localized classification actions in real time.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-step">Step 05</div>
-                    <div class="timeline-card-inner">
-                        <h3>Deploy Capstone Platforms</h3>
-                        <p>Compile individual software components into a unified, secure project profile, prepared for verification reviews.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-padding">
-        <div class="container cta-section">
-            <div class="cta-card reveal">
-                <h2>Ready to Start Building?</h2>
-                <p>Join a project-focused learning experience and develop practical skills through guided mentorship.</p>
+            <div class="cta-wrapper reveal" id="projects-cta-anchor">
+                <h3>Build These Systems Natively</h3>
+                <p>Gain absolute functional command over low-level execution structures and neural network arrays through concrete structural labs.</p>
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h4>Code to Creation</h4>
-                    <p>A precision-focused training structure designed to turn clean logic tracks into production software systems and integrated device matrices.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Curriculum Paths</h4>
-                    <ul>
-                        <li><a href="#curriculum">Core Programming</a></li>
-                        <li><a href="#curriculum">Automation Scripts</a></li>
-                        <li><a href="#curriculum">IoT Architectures</a></li>
-                        <li><a href="#curriculum">Computer Vision</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Direct Contact</h4>
-                    <ul>
-                        <li><a href="mailto:yp.creates124@gmail.com">yp.creates124@gmail.com</a></li>
-                        <li><a href="#journey">Raipur, Chhattisgarh, India</a></li>
-                        <li><a href="tel:+917000114227">+91 7000114227</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Engineered natively from scratch.</p>
-            </div>
-        </div>
+    <footer class="footer container">
+        <p>Engineered natively from scratch.</p>
     </footer>
 
-    <div id="btn-back-to-top" title="Return to Top View">↑</div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // --- Cache System Controls ---
-            const progressBar = document.getElementById("progress-bar");
-            const backToTopBtn = document.getElementById("btn-back-to-top");
-            const navbar = document.querySelector(".navbar");
-            const hamburgerBtn = document.getElementById("hamburgerBtn");
-            const navMenu = document.getElementById("navMenu");
-            const navLinks = document.querySelectorAll(".nav-link");
-            
-            // --- Mobile Drawer Controller Mechanism ---
-            if (hamburgerBtn && navMenu) {
-                const toggleMenuState = () => {
-                    const isNowOpen = navMenu.classList.toggle("open");
-                    document.body.classList.toggle("body-nav-open", isNowOpen);
-                };
-                
-                hamburgerBtn.addEventListener("click", (event) => {
-                    event.stopPropagation();
-                    toggleMenuState();
-                });
-                
-                document.querySelectorAll(".nav-link").forEach(link => {
-                    link.addEventListener("click", () => {
-                        if (navMenu.classList.contains("open")) {
-                            toggleMenuState();
-                        }
-                    });
-                });
+        const viewRegistry = {
+            'home': document.getElementById('view-home'),
+            'curriculum': document.getElementById('view-curriculum'),
+            'pricing': document.getElementById('view-pricing'),
+            'projects': document.getElementById('view-projects')
+        };
 
-                document.addEventListener("click", (event) => {
-                    if (navMenu.classList.contains("open") && !navMenu.contains(event.target) && !hamburgerBtn.contains(event.target)) {
-                        toggleMenuState();
+        const linkRegistry = {
+            'home': document.getElementById('link-home'),
+            'curriculum': document.getElementById('link-curriculum'),
+            'pricing': document.getElementById('link-pricing'),
+            'projects': document.getElementById('link-projects')
+        };
+
+        // Standard Intersection Observer configuration setup for slow Apple fade-ups
+        const revealOptions = { threshold: 0.05, rootMargin: "0px 0px -40px 0px" };
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed-active');
+                    
+                    // FIXED: Checks if home statistics cards are entering viewport, then triggers ticking acceleration animation loop
+                    if (entry.target.classList.contains('stat-card')) {
+                        const counterNode = entry.target.querySelector('.animated-counter');
+                        if (counterNode) executeCounterTickAnimation(counterNode);
                     }
-                });
-            }
-
-            // --- Calmer Real-time Metrics Increment Engine ---
-            const triggerCounterAcceleration = (element) => {
-                const targetValue = parseInt(element.getAttribute("data-target"), 10);
-                const valueSuffix = element.getAttribute("data-suffix") || "";
-                let baseValue = 0;
-                
-                const incrementalStep = targetValue / 65; 
-                
-                const processIncrementTick = () => {
-                    baseValue += incrementalStep;
-                    if (baseValue >= targetValue) {
-                        element.innerText = targetValue + valueSuffix;
-                    } else {
-                        element.innerText = Math.floor(baseValue) + valueSuffix;
-                        requestAnimationFrame(processIncrementTick);
-                    }
-                };
-                requestAnimationFrame(processIncrementTick);
-            };
-
-            // --- Scroll Handling Interface Operations ---
-            const executeScrollEvaluations = () => {
-                const globalScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const structuralScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                
-                if (structuralScrollHeight > 0) {
-                    progressBar.style.width = `${(globalScrollTop / structuralScrollHeight) * 100}%`;
+                    observer.unobserve(entry.target);
                 }
+            });
+        }, revealOptions);
 
-                if (globalScrollTop > 40) {
-                    navbar.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
-                    backToTopBtn.classList.add("visible");
+        function refreshScrollRevealTracking() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                el.classList.remove('revealed-active'); 
+                revealObserver.observe(el);
+            });
+        }
+
+        // FIXED: Pure incremental frame-rate ticker animation engine for metrics block numbers
+        function executeCounterTickAnimation(element) {
+            const target = parseInt(element.getAttribute('data-target'), 10);
+            const suffix = element.getAttribute('data-suffix') || '';
+            let current = 0;
+            
+            // Slow, deliberate frame pacing calculation rules
+            const frameStep = target / 55; 
+            
+            function processTick() {
+                current += frameStep;
+                if (current >= target) {
+                    element.innerText = target + suffix;
                 } else {
-                    navbar.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-                    backToTopBtn.classList.remove("visible");
+                    element.innerText = Math.floor(current) + suffix;
+                    requestAnimationFrame(processTick);
                 }
-            };
+            }
+            requestAnimationFrame(processTick);
+        }
 
-            window.addEventListener("scroll", executeScrollEvaluations, { passive: true });
-            
-            backToTopBtn.addEventListener("click", () => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
+        function navigateToView(targetViewId) {
+            if (!viewRegistry[targetViewId]) return;
+
+            Object.keys(viewRegistry).forEach(key => {
+                viewRegistry[key].classList.remove('view-active');
+                if(linkRegistry[key]) linkRegistry[key].classList.remove('active-link');
             });
 
-            // --- Calmer, Eye-Soothing Scroll Reveal Engine ---
-            const presentationObserverOptions = {
-                threshold: 0.12, 
-                rootMargin: "0px 0px -25px 0px"
-            };
+            viewRegistry[targetViewId].classList.add('view-active');
+            if(linkRegistry[targetViewId]) linkRegistry[targetViewId].classList.add('active-link');
 
-            const animateElementsOnVisibility = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                        
-                        if (entry.target.classList.contains("stat-card")) {
-                            const subCounterElement = entry.target.querySelector(".stat-number");
-                            if (subCounterElement) triggerCounterAcceleration(subCounterElement);
-                        }
-                        observer.unobserve(entry.target);
-                    }
-                });
-            };
+            window.scrollTo({ top: 0, behavior: 'instant' });
 
-            const centralElementObserver = new IntersectionObserver(animateElementsOnVisibility, presentationObserverOptions);
-            document.querySelectorAll(".reveal, .stat-card").forEach(item => centralElementObserver.observe(item));
+            const menuHandle = document.getElementById("navMenu");
+            if (menuHandle.classList.contains("drawer-open")) {
+                menuHandle.classList.remove("drawer-open");
+                document.body.style.overflow = "auto";
+            }
 
-            // --- Active Navigation Link Tracking System ---
-            const trackActiveNavigationStates = () => {
-                const layoutSections = document.querySelectorAll("section, header");
-                const currentScrollY = window.scrollY + 140;
-
-                layoutSections.forEach(currentSection => {
-                    const sectionTopBound = currentSection.offsetTop;
-                    const sectionBottomBound = sectionTopBound + currentSection.offsetHeight;
-                    const targetSectionId = currentSection.getAttribute("id");
-
-                    if (currentScrollY >= sectionTopBound && currentScrollY < sectionBottomBound && targetSectionId) {
-                        navLinks.forEach(linkElement => {
-                            linkElement.classList.remove("active");
-                            if (linkElement.getAttribute("href") === `#${targetSectionId}`) {
-                                linkElement.classList.add("active");
-                            }
-                        });
-                    } else if (window.scrollY < 100) {
-                        navLinks.forEach(linkElement => {
-                            linkElement.classList.remove("active");
-                        });
-                        if (navLinks[0]) navLinks[0].classList.add("active");
-                    }
-                });
-            };
-
-            window.addEventListener("scroll", trackActiveNavigationStates, { passive: true });
-        });
-
-        // --- Calmer Accordion Component Engine ---
-        function toggleModule(selectedCardElement) {
-            const currentlyExpandedCard = document.querySelector(".module-card.expanded");
+            updateVisualProgressTracker(targetViewId);
             
+            // Resets numbers when toggling views so the calculated animation fires flawlessly every time
+            if (targetViewId === 'home') {
+                document.querySelectorAll('.animated-counter').forEach(el => el.innerText = "0");
+            }
+            
+            setTimeout(refreshScrollRevealTracking, 50);
+        }
+
+        function updateVisualProgressTracker(viewId) {
+            const bar = document.getElementById("progress-bar");
+            const widthMappers = { 'home': '25%', 'curriculum': '50%', 'pricing': '75%', 'projects': '100%' };
+            bar.style.width = widthMappers[viewId] || '0%';
+        }
+
+        function toggleAccordionElement(selectedCardElement) {
+            const currentlyExpandedCard = document.querySelector(".module-card.expanded");
             if (currentlyExpandedCard && currentlyExpandedCard !== selectedCardElement) {
                 currentlyExpandedCard.classList.remove("expanded");
             }
-            
             selectedCardElement.classList.toggle("expanded");
-            
-            setTimeout(() => {
-                window.dispatchEvent(new Event("scroll"));
-            }, 510); 
         }
+
+        // FIXED: Premium cross-browser smooth scroll alignment controller
+        function smoothScrollToCtaAnchor(anchorElementId) {
+            const dynamicTargetBlock = document.getElementById(anchorElementId);
+            if (dynamicTargetBlock) {
+                dynamicTargetBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const hamburgerBtn = document.getElementById("hamburgerBtn");
+            const navMenu = document.getElementById("navMenu");
+            
+            if (hamburgerBtn && navMenu) {
+                hamburgerBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const state = navMenu.classList.toggle("drawer-open");
+                    document.body.style.overflow = state ? "hidden" : "auto";
+                });
+            }
+            
+            navigateToView('home');
+        });
     </script>
 </body>
 </html>
