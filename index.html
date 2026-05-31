@@ -21,8 +21,6 @@
             --border-hover: rgba(255, 255, 255, 0.18);
             --glass-blur: blur(25px);
             --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
-            
-            /* Official Apple Cinematic Motion Physics Curve */
             --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -42,7 +40,7 @@
             letter-spacing: -0.022em;
         }
 
-        /* --- Custom App Scrollbar --- */
+        /* --- Custom Scrollbar --- */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-base); }
         ::-webkit-scrollbar-thumb { background: #2c2c2e; border-radius: 4px; }
@@ -55,6 +53,7 @@
         }
 
         .section-padding { padding: 80px 0; }
+        
         .section-title {
             font-size: clamp(2.2rem, 5vw, 2.8rem);
             text-align: center;
@@ -64,6 +63,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        
         .section-subtitle {
             font-size: clamp(0.95rem, 2vw, 1.15rem);
             text-align: center;
@@ -73,7 +73,7 @@
             line-height: 1.5;
         }
 
-        /* --- Native Premium Apple Animation Engine Layouts --- */
+        /* --- Multi-Page Router View Animation System --- */
         .app-view {
             display: none;
             min-height: calc(100vh - 240px);
@@ -89,7 +89,7 @@
             transform: translateY(0);
         }
 
-        /* Ambient Fluid Kinetic Orb Art */
+        /* Background Art Orbs */
         .orb-container {
             position: fixed;
             width: 100%;
@@ -109,7 +109,7 @@
             100% { transform: translate(40px, 40px) scale(1.08); }
         }
 
-        /* Eye-Calming Viewport Reveal Engine */
+        /* Scroll Reveal Engine */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -120,7 +120,7 @@
             transform: translateY(0);
         }
 
-        /* --- Premium Card Architecture --- */
+        /* --- Card System Layouts --- */
         .glow-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
@@ -135,7 +135,7 @@
             transform: scale(1.01);
         }
 
-        /* --- Navigation Architecture Layout --- */
+        /* --- Navigation Bar Architecture --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -147,7 +147,6 @@
             border-bottom: 1px solid var(--border-glow);
             z-index: 2000;
             padding: 18px 0;
-            transition: background-color 0.5s var(--apple-ease);
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .brand-logo {
@@ -158,9 +157,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: opacity 0.3s ease;
+            cursor: pointer;
         }
-        .brand-logo:hover { opacity: 0.8; }
         .nav-menu { display: flex; align-items: center; gap: 32px; list-style: none; }
         .nav-link {
             color: var(--text-secondary);
@@ -212,7 +210,7 @@
         .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.12); border-color: var(--border-hover); transform: scale(1.01); }
         .btn-large { padding: 16px 36px; font-size: 1rem; border-radius: 30px; width: 100%; max-width: 320px; }
 
-        /* --- Home Page UI Elements --- */
+        /* --- UI Section Grids --- */
         .hero-section { text-align: center; padding: 40px 0; }
         .hero-title { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.1; margin-bottom: 24px; background: linear-gradient(180deg, #ffffff 0%, #86868b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; letter-spacing: -0.03em; }
         .hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 56px; }
@@ -221,22 +219,17 @@
         .stat-number { font-size: 2.8rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; letter-spacing: -0.02em; }
         .stat-label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
 
-        /* --- Day-Wise Focus Curriculum Layout --- */
+        /* --- Accordion Curriculum Layout --- */
         .modules-container { display: flex; flex-direction: column; gap: 20px; }
-        .module-card { overflow: hidden; }
-        .module-header { padding: 28px 36px; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.3s ease; }
+        .module-header { padding: 28px 36px; display: flex; justify-content: space-between; align-items: center; }
         .module-card:hover .module-header { background-color: rgba(255,255,255,0.01); }
         .module-title-block { display: flex; align-items: center; gap: 20px; }
         .module-icon { font-size: 1.6rem; }
         .module-info h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.01em; }
         .module-info p { font-size: 0.85rem; color: var(--accent-blue); font-weight: 500; }
-        .difficulty-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
-        .diff-beginner { background: rgba(52, 199, 89, 0.1); color: var(--accent-green); }
-        .diff-intermediate { background: rgba(255, 159, 10, 0.1); color: #ff9f0a; }
-        .diff-advanced { background: rgba(255, 69, 58, 0.1); color: #ff453a; }
+        .difficulty-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 12px; border-radius: 12px; text-transform: uppercase; }
         .arrow-icon { width: 22px; height: 22px; stroke: var(--text-secondary); fill: none; stroke-width: 2; transition: transform 0.5s var(--apple-ease); }
         .module-card.expanded .arrow-icon { transform: rotate(180deg); stroke: var(--text-primary); }
-        
         .module-content { max-height: 0; overflow: hidden; transition: max-height 0.6s var(--apple-ease), padding 0.6s var(--apple-ease); padding: 0 36px; }
         .module-card.expanded .module-content { max-height: 1200px; padding-bottom: 36px; }
         .module-desc { margin-bottom: 24px; font-size: 1rem; line-height: 1.6; color: var(--text-secondary); }
@@ -244,17 +237,19 @@
         .day-timeline { display: flex; flex-direction: column; gap: 14px; border-left: 1px solid rgba(255,255,255,0.08); padding-left: 20px; margin-top: 12px; }
         .day-node { font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); transform: translateX(-5px); opacity: 0; transition: all 0.5s var(--apple-ease); }
         .module-card.expanded .day-node { transform: translateX(0); opacity: 1; }
-        
-        .module-card.expanded .day-node:nth-child(1) { transition-delay: 0.05s; }
-        .module-card.expanded .day-node:nth-child(2) { transition-delay: 0.10s; }
-        .module-card.expanded .day-node:nth-child(3) { transition-delay: 0.15s; }
-        .module-card.expanded .day-node:nth-child(4) { transition-delay: 0.20s; }
-        .module-card.expanded .day-node:nth-child(5) { transition-delay: 0.25s; }
-        .module-card.expanded .day-node:nth-child(6) { transition-delay: 0.30s; }
-        
-        .day-range { color: var(--text-primary); font-weight: 600; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 3px 10px; border-radius: 8px; margin-right: 10px; display: inline-block; letter-spacing: 0.02em; }
+        .day-range { color: var(--text-primary); font-weight: 600; font-size: 0.8rem; background: rgba(255,255,255,0.06); padding: 3px 10px; border-radius: 8px; margin-right: 10px; display: inline-block; }
 
-        /* --- Fee Structure & Referral Dashboard Matrix --- */
+        /* Staggered text loads */
+        .module-card.expanded .day-node:nth-child(1) { transition-delay: 0.04s; }
+        .module-card.expanded .day-node:nth-child(2) { transition-delay: 0.08s; }
+        .module-card.expanded .day-node:nth-child(3) { transition-delay: 0.12s; }
+        .module-card.expanded .day-node:nth-child(4) { transition-delay: 0.16s; }
+        .module-card.expanded .day-node:nth-child(5) { transition-delay: 0.20s; }
+        .module-card.expanded .day-node:nth-child(6) { transition-delay: 0.24s; }
+        .module-card.expanded .day-node:nth-child(7) { transition-delay: 0.28s; }
+        .module-card.expanded .day-node:nth-child(8) { transition-delay: 0.32s; }
+
+        /* --- Fee Structure UI Panel --- */
         .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-bottom: 36px; }
         .price-card { padding: 44px; position: relative; }
         .price-badge { position: absolute; top: 24px; right: 24px; background: rgba(41, 151, 255, 0.08); color: var(--accent-blue); font-size: 0.75rem; font-weight: 600; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(41,151,255,0.12); }
@@ -263,40 +258,48 @@
         .price-value { font-size: 3.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px; letter-spacing: -0.02em; }
         .price-features { list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 0.95rem; color: var(--text-secondary); }
         .price-features li::before { content: "✓ "; color: var(--accent-blue); font-weight: bold; margin-right: 6px; }
-        
         .pricing-action-container { display: flex; justify-content: center; margin-bottom: 12px; }
 
         .referral-box { background: linear-gradient(135deg, rgba(41,151,255,0.02) 0%, rgba(191,90,242,0.02) 100%); border: 1px solid rgba(255,255,255,0.04); border-radius: 24px; padding: 44px; margin-top: 40px; }
         .ref-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
         .ref-title-block h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
         .ref-cap-pill { background: rgba(191, 90, 242, 0.08); color: var(--accent-purple); font-size: 0.8rem; font-weight: 600; padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(191,90,242,0.12); }
-        .ref-rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
-        .rule-card { padding: 24px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); border-radius: 16px; transition: border-color 0.4s ease; }
-        .rule-card:hover { border-color: rgba(255,255,255,0.08); }
-        .rule-num { font-size: 0.75rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
-        .rule-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.45; }
 
-        /* --- Final Integrated CTA Section --- */
+        /* --- Corporate Communications Portal Layout --- */
+        .support-query-banner {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 60px;
+            text-align: center;
+            backdrop-filter: var(--glass-blur);
+        }
+        .support-header-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); }
+        .support-subtitle-text { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px; }
+        .support-links-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+        .support-anchor { color: var(--accent-blue); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: opacity 0.3s ease; display: inline-flex; align-items: center; gap: 6px; }
+        .support-anchor:hover { opacity: 0.8; text-decoration: underline; }
+
+        /* --- Action CTA Interfaces --- */
         .cta-wrapper { text-align: center; margin-top: 64px; padding: 48px 24px 0 24px; border-top: 1px solid rgba(255,255,255,0.05); }
         .cta-wrapper h3 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.02em; }
         .cta-wrapper p { font-size: 1rem; color: var(--text-secondary); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
-        /* --- Projects Grid UI Layout --- */
+        /* --- Projects Grid UI Elements --- */
         .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .project-card { padding: 36px 28px; }
         .project-icon { font-size: 2rem; margin-bottom: 18px; display: inline-block; }
         .project-card h3 { font-size: 1.25rem; margin-bottom: 10px; font-weight: 600; }
         .project-card p { font-size: 0.9rem; line-height: 1.45; color: var(--text-secondary); }
 
-        /* --- Hamburger Mobile Architecture --- */
+        /* --- Mobile Navigation Menu Drawer --- */
         .hamburger { display: none; flex-direction: column; gap: 5px; border: none; background: transparent; cursor: pointer; padding: 6px; z-index: 2002; }
         .hamburger span { display: block; width: 22px; height: 2px; background-color: var(--text-primary); transition: all 0.4s var(--apple-ease); }
         
-        /* --- Responsive View Control Mappers --- */
         @media (max-width: 920px) {
             .projects-grid, .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .pricing-grid { grid-template-columns: 1fr; }
-            .ref-rules-grid { grid-template-columns: 1fr; gap: 16px; }
         }
         @media (max-width: 768px) {
             .hamburger { display: flex; }
@@ -309,12 +312,11 @@
         @media (max-width: 480px) {
             .projects-grid, .stats-grid { grid-template-columns: 1fr; }
             .module-header { padding: 24px 20px; }
-            .module-content { padding: 0 20px; }
+            .module-content { padding: 0 24px; }
             .hero-buttons { flex-direction: column; width: 100%; align-items: center; }
         }
 
-        /* --- Structural Footer --- */
-        .footer { border-top: 1px solid var(--border-glow); padding: 48px 0; font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 100px; }
+        .footer { border-top: 1px solid var(--border-glow); padding: 48px 0; font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 80px; }
         .footer p { color: #424245; letter-spacing: 0.05em; font-weight: 500; }
     </style>
 </head>
@@ -328,7 +330,7 @@
 
     <nav class="navbar">
         <div class="container nav-container">
-            <a onclick="navigateToView('home')" class="brand-logo" style="cursor:pointer;">
+            <a onclick="navigateToView('home')" class="brand-logo">
                 <span>🚀</span> Code to Creation
             </a>
             <ul class="nav-menu" id="navMenu">
@@ -338,9 +340,9 @@
                 <li><a onclick="navigateToView('projects')" class="nav-link" id="link-projects">Projects</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary">Register</a>
+                <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary">Register Hub</a>
             </div>
-            <button class="hamburger" id="hamburgerBtn" aria-label="Open Link Drawer">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open Navigation Drawer">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -357,10 +359,10 @@
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary" style="padding:14px 28px; border-radius:30px; font-weight:600;">Register Now</a>
             </div>
             <div class="hero-badges reveal">
-                <div class="badge-glass">15 Seats Only</div>
-                <div class="badge-glass">4 Core Modules</div>
-                <div class="badge-glass">Hands-On Execution</div>
-                <div class="badge-glass">Premium Fluid Motion</div>
+                <div class="badge-glass">✨ 15 Seats Only</div>
+                <div class="badge-glass">📦 4 Core Modules</div>
+                <div class="badge-glass">🛠️ Hands-On Execution</div>
+                <div class="badge-glass">📱 Premium Fluid Motion</div>
             </div>
         </section>
 
@@ -384,12 +386,21 @@
                 </div>
             </div>
         </section>
+
+        <div class="support-query-banner reveal">
+            <p class="support-header-title">Have a question before registering?</p>
+            <p class="support-subtitle-text">Reach out to us directly via phone or email anytime for speedy responses.</p>
+            <div class="support-links-row">
+                <a href="mailto:yp.creates@gmail.com" class="support-anchor">✉ yp.creates@gmail.com</a>
+                <a href="tel:+917000114227" class="support-anchor">📞 +91 7000114227</a>
+            </div>
+        </div>
     </main>
 
     <main class="app-view container" id="view-curriculum">
         <section class="section-padding">
             <h2 class="section-title reveal">Program Modules</h2>
-            <p class="section-subtitle reveal">An structured path transitioning from pure foundational logic semantics directly into physical hardware and neural networks.</p>
+            <p class="section-subtitle reveal">A structured path transitioning from pure foundational logic semantics directly into physical hardware and neural networks.</p>
 
             <div class="modules-container">
                 <div class="module-card glow-card reveal" onclick="toggleAccordionElement(this)">
@@ -407,7 +418,7 @@
                         </div>
                     </div>
                     <div class="module-content">
-                        <p class="module-desc">Learn the fundamentals of programming, understand how software works, and build confidence with object-oriented programming through practical examples and projects.</p>
+                        <p class="module-desc">Master system execution mechanics, memory structures, compilation loops, and structural OOP workflows directly from scratch.</p>
                         <div class="topics-title">Day-Centric Focus Tracker</div>
                         <div class="day-timeline">
                             <div class="day-node"><span class="day-range">Days 01 – 03</span>VS Code environment integration, compiler configuration loops, and programming theory basics.</div>
@@ -416,8 +427,8 @@
                             <div class="day-node"><span class="day-range">Days 11 – 13</span>Multi-Dimensional spatial structures, indices tracking maps, and 1D/2D arrays.</div>
                             <div class="day-node"><span class="day-range">Days 14 – 16</span>Processing character buffers, continuous tokens tracking, and native string manipulation layers.</div>
                             <div class="day-node"><span class="day-range">Days 17 – 19</span>High-performance indexing scripts, logic checks, and fundamental searching & sorting algorithms.</div>
-                            <div class="day-node"><span class="day-range">Days 20 – 21</span>Custom memory blueprint maps, context layout scoping lines, and OOP classes & objects.</div>
-                            <div class="day-node"><span class="day-range">Days 21 – 25</span>Implementing the 4 pillars of OOPs (Encapsulation, Inheritance, Polymorphism, and Abstraction).</div>
+                            <div class="day-node"><span class="day-range">Days 20 – 22</span>Custom memory blueprint maps, context layout scoping lines, and OOP classes & objects.</div>
+                            <div class="day-node"><span class="day-range">Days 23 – 25</span>Implementing the 4 pillars of OOPs (Encapsulation, Inheritance, Polymorphism, and Abstraction).</div>
                         </div>
                     </div>
                 </div>
@@ -503,6 +514,15 @@
                 <p>Begin with clear logic modules, advance through integrated device pipelines, and compile your capstone review line cleanly.</p>
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
             </div>
+
+            <div class="support-query-banner reveal">
+                <p class="support-header-title">Have a question about the Day Layout?</p>
+                <p class="support-subtitle-text">Reach out to us directly via phone or email anytime for speedy responses.</p>
+                <div class="support-links-row">
+                    <a href="mailto:yp.creates@gmail.com" class="support-anchor">✉ yp.creates@gmail.com</a>
+                    <a href="tel:+917000114227" class="support-anchor">📞 +91 7000114227</a>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -544,34 +564,36 @@
             <div class="referral-box reveal">
                 <div class="ref-header">
                     <div class="ref-title-block">
-                        <h3>Referral Sharing Protocol</h3>
-                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Earn dynamic tuition balance deductions while engineering together.</p>
+                        <h3>Refer and Earn</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:4px;">Learn and build alongside your friends while saving on tuition costs.</p>
                     </div>
-                    <div class="ref-cap-pill">Maximum Cap: ₹1,500 Return Limit</div>
+                    <div class="ref-cap-pill">Maximum Discount: Up to ₹1,500 Off</div>
                 </div>
                 
-                <div class="price-value" style="font-size:2rem; color:var(--accent-purple);">₹500 <span style="font-size:1rem; color:var(--text-secondary); font-weight:normal;">Earned Per Successful Peer Onboarding</span></div>
-                
-                <div class="ref-rules-grid">
-                    <div class="rule-card">
-                        <div class="rule-num">Requirement 01</div>
-                        <p>To authorize any affiliate referral token credit generation loops, your profile must be successfully enrolled in the active batch first.</p>
-                    </div>
-                    <div class="rule-card">
-                        <div class="rule-num">Mechanism 02</div>
-                        <p>Your referred student completes their registration form and maps your verified entry token onto their secure transaction panel checklist.</p>
-                    </div>
-                    <div class="rule-card">
-                        <div class="rule-num">Threshold 03</div>
-                        <p>Receive an instantaneous ₹500 rebate track ledger credit back. You can repeat this loop up to 3 times to claim a max reward pool of ₹1,500 total value.</p>
-                    </div>
+                <div class="price-value" style="font-size:2rem; color:var(--accent-purple); margin-bottom: 24px;">
+                    ₹500 <span style="font-size:1rem; color:var(--text-secondary); font-weight:normal;">Cashback for every peer who joins</span>
                 </div>
+                
+                <ul class="price-features" style="color: var(--text-secondary); font-size: 0.95rem; max-width: 740px;">
+                    <li style="margin-bottom: 12px;"><strong style="color: var(--text-primary);">You must be enrolled first:</strong> To qualify for the referral reward, secure your own seat in the batch layer first.</li>
+                    <li style="margin-bottom: 12px;"><strong style="color: var(--text-primary);">Let us know who you referred:</strong> Once your friend completes their registration, simply text or mail us their name details.</li>
+                    <li style="margin-bottom: 12px;"><strong style="color: var(--text-primary);">Get your cashback:</strong> Receive ₹500 directly back to your account per friend. You can refer up to 3 friends for a total discount of ₹1,500!</li>
+                </ul>
             </div>
 
             <div class="cta-wrapper reveal" id="pricing-cta-anchor">
                 <h3>Lock in Current Pricing Levels</h3>
                 <p>Register now to secure your priority baseline seats before allocations transition automatically to general pricing thresholds.</p>
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
+            </div>
+
+            <div class="support-query-banner reveal">
+                <p class="support-header-title">Have a question about Fees or Cashback?</p>
+                <p class="support-subtitle-text">Reach out to us directly via phone or email anytime for speedy responses.</p>
+                <div class="support-links-row">
+                    <a href="mailto:yp.creates@gmail.com" class="support-anchor">✉ yp.creates@gmail.com</a>
+                    <a href="tel:+917000114227" class="support-anchor">📞 +91 7000114227</a>
+                </div>
             </div>
         </section>
     </main>
@@ -619,6 +641,15 @@
                 <p>Gain absolute functional command over low-level execution structures and neural network arrays through concrete structural labs.</p>
                 <a href="https://ctc-backend-5x42.onrender.com/bootcamp_reg" class="btn btn-primary btn-large">Apply for Mentorship</a>
             </div>
+
+            <div class="support-query-banner reveal">
+                <p class="support-header-title">Have a question about the Capstone Apps?</p>
+                <p class="support-subtitle-text">Reach out to us directly via phone or email anytime for speedy responses.</p>
+                <div class="support-links-row">
+                    <a href="mailto:yp.creates@gmail.com" class="support-anchor">✉ yp.creates@gmail.com</a>
+                    <a href="tel:+917000114227" class="support-anchor">📞 +91 7000114227</a>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -641,14 +672,12 @@
             'projects': document.getElementById('link-projects')
         };
 
-        // Standard Intersection Observer configuration setup for slow Apple fade-ups
         const revealOptions = { threshold: 0.05, rootMargin: "0px 0px -40px 0px" };
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed-active');
                     
-                    // FIXED: Checks if home statistics cards are entering viewport, then triggers ticking acceleration animation loop
                     if (entry.target.classList.contains('stat-card')) {
                         const counterNode = entry.target.querySelector('.animated-counter');
                         if (counterNode) executeCounterTickAnimation(counterNode);
@@ -665,13 +694,10 @@
             });
         }
 
-        // FIXED: Pure incremental frame-rate ticker animation engine for metrics block numbers
         function executeCounterTickAnimation(element) {
             const target = parseInt(element.getAttribute('data-target'), 10);
             const suffix = element.getAttribute('data-suffix') || '';
             let current = 0;
-            
-            // Slow, deliberate frame pacing calculation rules
             const frameStep = target / 55; 
             
             function processTick() {
@@ -707,7 +733,6 @@
 
             updateVisualProgressTracker(targetViewId);
             
-            // Resets numbers when toggling views so the calculated animation fires flawlessly every time
             if (targetViewId === 'home') {
                 document.querySelectorAll('.animated-counter').forEach(el => el.innerText = "0");
             }
@@ -729,7 +754,6 @@
             selectedCardElement.classList.toggle("expanded");
         }
 
-        // FIXED: Premium cross-browser smooth scroll alignment controller
         function smoothScrollToCtaAnchor(anchorElementId) {
             const dynamicTargetBlock = document.getElementById(anchorElementId);
             if (dynamicTargetBlock) {
